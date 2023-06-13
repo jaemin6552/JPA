@@ -28,7 +28,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void deleteByName(String name) {
-        productRepository.deleteByName(name);
+    public void deleteById(String id) {
+        productRepository.deleteById(id);
     }
 }

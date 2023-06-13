@@ -7,13 +7,14 @@ import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
-public class ProductDto {
+public class ProductDto implements Serializable {
 
     //@Size(min = 8, max = 8) // abcdefg
     @NotNull

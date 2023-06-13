@@ -8,5 +8,5 @@ public interface ProductService {
 
     ProductDto getProduct(String productId);
 
-    void deleteByName(String name);
+    void deleteById(String id);
 }

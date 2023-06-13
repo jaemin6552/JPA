@@ -7,5 +7,5 @@ public interface ProductDAO {
     Product saveProduct(Product productEntity);
 
     Product getProduct(String productId);
-    void deleteByName(String name);
+    void deleteById(String id);
 }

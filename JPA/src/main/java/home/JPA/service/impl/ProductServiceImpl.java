@@ -4,22 +4,20 @@ import home.JPA.dto.ProductDto;
 import home.JPA.entity.Product;
 import home.JPA.handler.ProductDataHandler;
 import home.JPA.service.ProductService;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    ProductDataHandler productDataHandler;
+    private final ProductDataHandler productDataHandler;
 
-    @Autowired
-    public ProductServiceImpl(ProductDataHandler productDataHandler) {
-        this.productDataHandler = productDataHandler;
-    }
 
     @Override
     public ProductDto saveProduct(String productId, String productName, int productPrice,
@@ -31,11 +29,10 @@ public class ProductServiceImpl implements ProductService {
 
         LOGGER.info("[saveProduct] Entity 객체를 DTO 객체로 변환 작업. productId : {}",
                 product.getId());
-        ProductDto productDto = new ProductDto(product.getId(),
+
+        return new ProductDto(product.getId(),
                 product.getName(), product.getPrice(),
                 product.getStock());
-
-        return productDto;
     }
 
     @Override
@@ -46,15 +43,14 @@ public class ProductServiceImpl implements ProductService {
 
         LOGGER.info("[getProduct] Entity 객체를 DTO 객체로 변환 작업. productId : {}",
                 product.getId());
-        ProductDto productDto = new ProductDto(product.getId(),
+
+        return new ProductDto(product.getId(),
                 product.getName(), product.getPrice(),
                 product.getStock());
-
-        return productDto;
     }
 
     @Override
-    public void deleteByName(String name) {
-        productDataHandler.deleteByName(name);
+    public void deleteById(String id) {
+        productDataHandler.deleteById(id);
     }
 }

@@ -5,6 +5,8 @@ import home.JPA.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ public class ProductController {
     }
 
     // http://localhost:8080/api/v1/product-api/product/{productId}
+    @Cacheable(value = "product", key = "#productId")
     @GetMapping(value = "/product/{productId}")
     public ProductDto getProduct(@PathVariable String productId) {
 
@@ -67,10 +70,10 @@ public class ProductController {
     }
 
 
-
-    @DeleteMapping(value = "/product/{productName}")
-    public void deleteProduct(@PathVariable String productName) {
-        productService.deleteByName(productName);
+    @CacheEvict(value = "product", key = "#productId")
+    @DeleteMapping(value = "/product-del/{productId}")
+    public void deleteProduct(@PathVariable String productId) {
+        productService.deleteById(productId);
     }
 
 

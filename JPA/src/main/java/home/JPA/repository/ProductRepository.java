@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     long countByName(String name);
 
     // 삭제
-    void deleteByName(String name);
+    void deleteById(String id);
     long removeByName(String name);
 
     // 값 개수 제한

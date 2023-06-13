@@ -42,7 +42,7 @@ public class ProductDataHandlerImpl implements ProductDataHandler {
     }
 
     @Override
-    public void deleteByName(String name) {
-        productDAO.deleteByName(name);
+    public void deleteById(String id) {
+        productDAO.deleteById(id);
     }
 }
