@@ -1,8 +1,9 @@
 package home.JPA.config;
 
-import home.JPA.jwt.JwtAccessDeniedHandler;
-import home.JPA.jwt.JwtAuthenticationEntryPoint;
-import home.JPA.jwt.TokenProvider;
+import home.JPA.config.jwt.JwtAccessDeniedHandler;
+import home.JPA.config.jwt.JwtAuthenticationEntryPoint;
+import home.JPA.config.jwt.JwtSecurityConfig;
+import home.JPA.config.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,9 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
+                .antMatchers("/sign-api/sign-in", "/sign-api/sign-up",
+                        "/sign-api/exception").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

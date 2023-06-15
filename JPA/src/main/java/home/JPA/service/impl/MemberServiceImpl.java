@@ -6,17 +6,21 @@ import home.JPA.dto.MemberResponseDto;
 import home.JPA.dto.TokenDto;
 import home.JPA.entity.Member;
 import home.JPA.handler.MemberDataHandler;
-import home.JPA.jwt.TokenProvider;
+import home.JPA.config.jwt.TokenProvider;
+import home.JPA.mapper.MemberMapper;
 import home.JPA.repository.MemberRepository;
 import home.JPA.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -31,6 +35,9 @@ public class MemberServiceImpl implements MemberService {
     private final AuthenticationManagerBuilder managerBuilder;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+
+    private final MemberMapper memberMapper;
+
 
     public MemberResponseDto signup(MemberRequestDto requestDto) {
         if (memberRepository.existsByEmail(requestDto.getEmail())) {
@@ -82,4 +89,15 @@ public class MemberServiceImpl implements MemberService {
     public void deleteById(String id) {
         memberDataHandler.deleteById(id);
     }
+
+    @Override
+    public List<MemberDto> getAll() {
+        List<MemberDto> memberList = memberMapper.getAll();
+        if(memberList != null && memberList.size() > 0) {
+            return memberList;
+        }
+        return null;
+    }
+
+
 }

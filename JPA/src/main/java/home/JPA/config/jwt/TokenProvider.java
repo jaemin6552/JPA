@@ -1,4 +1,4 @@
-package home.JPA.jwt;
+package home.JPA.config.jwt;
 
 import home.JPA.dto.TokenDto;
 import io.jsonwebtoken.*;

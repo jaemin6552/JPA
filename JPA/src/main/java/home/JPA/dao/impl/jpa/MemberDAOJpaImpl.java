@@ -1,4 +1,4 @@
-package home.JPA.dao.impl;
+package home.JPA.dao.impl.jpa;
 
 import home.JPA.dao.MemberDAO;
 import home.JPA.entity.Member;
@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberDAOImpl implements MemberDAO {
+public class MemberDAOJpaImpl implements MemberDAO {
     MemberRepository memberRepository;
 
     @Autowired
-    public MemberDAOImpl(MemberRepository memberRepository) {
+    public MemberDAOJpaImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 

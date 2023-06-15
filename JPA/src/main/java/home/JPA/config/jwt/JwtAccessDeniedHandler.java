@@ -1,4 +1,4 @@
-package home.JPA.jwt;
+package home.JPA.config.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

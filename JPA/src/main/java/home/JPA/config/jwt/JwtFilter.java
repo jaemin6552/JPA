@@ -1,9 +1,8 @@
-package home.JPA.jwt;
+package home.JPA.config.jwt;
 
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
