@@ -74,6 +74,7 @@ public class MemberController {
         return ResponseEntity.ok(memberService.signup(requestDto));
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(memberService.login(requestDto));

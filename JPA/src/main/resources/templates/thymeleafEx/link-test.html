@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h1>타임리프 링크 테스트</h1>
+        <div>
+          <a th:href="@{/thymeleaf/member-list}">멤버 리스트로 이동</a>
+        </div>
+        <div>
+
+        </div>
+        <div>
+          <a th:href="@{/thymeleaf/link-param(param1 = '파라미터1번입니다.', param2 = '파라미터2번입니다.')}">파라미터 전달</a>
+        </div>
+    </body>
+</html>

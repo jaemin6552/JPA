@@ -18,4 +18,5 @@ public interface MemberMapper {
             @Result(property = "MemberPwd", column = "pwd")
     })
     List<MemberDto> getAll();
+
 }
