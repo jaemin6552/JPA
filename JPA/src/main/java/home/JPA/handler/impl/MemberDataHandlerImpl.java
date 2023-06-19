@@ -25,14 +25,12 @@ public class MemberDataHandlerImpl implements MemberDataHandler {
     }
 
     @Override
-    public Member saveMember(String memberId, String memberName, String memberPwd, String memberEmail) {
+    public Member saveMember(Member newMember) {
 
         LOGGER.debug("[saveProductEntity] 매개변수를 통해 Entity 객체 생성");
-        Member member = new Member(memberId, memberName, memberPwd,
-                memberEmail, Authority.ROLE_USER);
 
 //        LOGGER.info("[saveProductEntity] productDAO로 Member 정보 저장 요청. productId : {}", productId);
-        return memberDAO.saveMember(member);
+        return memberDAO.saveMember(newMember);
     }
 
     @Override

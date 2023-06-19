@@ -4,12 +4,13 @@ import home.JPA.dto.MemberDto;
 import home.JPA.dto.MemberRequestDto;
 import home.JPA.dto.MemberResponseDto;
 import home.JPA.dto.TokenDto;
+import home.JPA.entity.Member;
 
 import java.util.List;
 
 public interface MemberService {
 
-    MemberDto saveMember(String memberId, String memberName, String memberPwd, String memberEmail);
+    MemberDto saveMember(Member member);
 
     MemberDto getMember(String memberId);
 

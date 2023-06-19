@@ -21,7 +21,7 @@ public class ThymeleafController {
         MemberDto memberDto = new MemberDto();
         memberDto.setMemberId("jae6552");
         memberDto.setMemberEmail("jae6552@naver.com");
-        memberDto.setMemberName("jm");
+        memberDto.setMemberRealName("jm");
         memberDto.setMemberPwd("qkqh1234");
         model.addAttribute("memberDto",memberDto);
         return "thymeleafEx/memberInfo";
@@ -42,4 +42,7 @@ public class ThymeleafController {
     public String thymeleafLink() {
         return "thymeleafEx/link-test";
     }
+
+
+
 }

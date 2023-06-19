@@ -3,6 +3,7 @@ package home.JPA.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,14 +12,18 @@ import javax.persistence.*;
 @Builder
 @ToString
 @Table(name = "member_grade")
-
+@Entity
 public class MemberGrade {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    @Column(name = "grade_id")
+    private String grade;
 
-    String grade;
+    @Column(name="min_score")
+    private long minScore;
+    @Column(unique = true,name="grade_name")
+    private String gradeName;
 
-    int count;
+    @OneToMany(mappedBy = "grade") // 역방향 매핑
+    private List<Member> members;
 
 }

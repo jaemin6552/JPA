@@ -2,28 +2,35 @@ package home.JPA.dto;
 
 import com.sun.istack.NotNull;
 import home.JPA.entity.Member;
+import home.JPA.entity.MemberGrade;
+import home.JPA.repository.MemberGradeRepository;
+import home.JPA.repository.MemberRepository;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
+@NoArgsConstructor
 public class MemberDto implements Serializable {
+
 
     //@Size(min = 8, max = 8) // abcdefg
     @NotNull
-    private String MemberName;
+    private String MemberRealName;
 
     @NotNull
     @Id
     private String MemberId;
+
+    @NotNull
+    private String MemberNickName;
+
+    @NotNull
+    private String phone;
 
     @NotNull
     private String MemberEmail;
@@ -31,20 +38,22 @@ public class MemberDto implements Serializable {
     @NotNull
     private String MemberPwd;
 
+    @NotNull
+    private String gradeId;
 
-//    public MemberDto(String name, String id, String email, String pwd) {
-//        this.MemberName=name;
-//        this.MemberId=id;
-//        this.MemberEmail=email;
-//        this.MemberPwd=pwd;
-//    }
+    @NotNull
+    private int score;
+
 
     public Member toEntity(){
         return Member.builder()
                 .id(MemberId)
-                .name(MemberName)
+                .realName(MemberRealName)
                 .pwd(MemberPwd)
                 .email(MemberEmail)
+                .nickName(MemberNickName)
+                .phoneNumber(phone)
+                .score(score)
                 .build();
     }
 

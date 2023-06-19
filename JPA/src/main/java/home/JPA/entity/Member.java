@@ -18,29 +18,33 @@ public class Member extends BaseEntity{
 
     @Id
     String id;
-
-    String name;
-
+    String realName;
+    @Column(name = "nick_name",unique = true)
+    String nickName;
     String pwd;
-
+    @Column(unique = true)
     String email;
+    @Column(name = "phone_number")
+    String phoneNumber;
+    @ManyToOne
+    @JoinColumn(name = "grade_id") // 외래키 설정
+    private MemberGrade grade;
 
-  /*
-  @Column
-  String sellerId;
+    private int score;
 
-  @Column
-  String sellerPhoneNumber;
-   */
-  @Enumerated(EnumType.STRING)
-  private Authority authority;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
-    public MemberDto toDto(){
+    public MemberDto toDto(MemberGrade grade){
+        String gradeId = grade.getGradeName();
         return MemberDto.builder()
                 .MemberId(id)
-                .MemberName(name)
+                .MemberRealName(realName)
                 .MemberPwd(pwd)
                 .MemberEmail(email)
+                .MemberNickName(nickName)
+                .phone(phoneNumber)
+                .gradeId(gradeId)
                 .build();
     }
 
