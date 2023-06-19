@@ -16,6 +16,8 @@ public interface MemberService {
 
     void deleteById(String memberId);
 
+    boolean updateByNickName(TokenDto tokenDto);
+
     public MemberResponseDto signup(MemberRequestDto requestDto);
     public TokenDto login(MemberRequestDto requestDto);
     public List<MemberDto> getAll();

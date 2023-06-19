@@ -13,11 +13,9 @@ import javax.persistence.Id;
 @Getter
 public class Language {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    int id;
-
-    @UniqueElements
     String name;
+
+
 
 
 

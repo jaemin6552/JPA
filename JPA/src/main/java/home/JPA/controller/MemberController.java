@@ -86,6 +86,29 @@ public class MemberController {
     public List<MemberDto> getAll() {
         return memberService.getAll();
     }
+
+    @GetMapping("/get-grade")
+    public int getGrade(@RequestParam String gradeName){
+        String gradeId = "";
+        switch (gradeName){
+            case "브론즈" :
+                gradeId = "0";
+                break;
+            case "실버" :
+                gradeId = "1";
+                break;
+            case "골드" :
+                gradeId = "2";
+                break;
+            case "플레티넘" :
+                gradeId = "3";
+                break;
+            case "다이아몬드" :
+                gradeId = "4";
+                break;
+        }
+        return memberGradeService.getGradeNum(gradeId);
+    }
     @GetMapping("/save")
     public void save(){
         for(int i =0; i<5; i++) {
