@@ -19,7 +19,6 @@ public class ThymeleafController {
     @GetMapping("/member")
     public String thymeleafMember(Model model){
         MemberDto memberDto = new MemberDto();
-        memberDto.setMemberId("jae6552");
         memberDto.setMemberEmail("jae6552@naver.com");
         memberDto.setMemberRealName("jm");
         memberDto.setMemberPwd("qkqh1234");

@@ -7,16 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberRequestDto {
-    @NotNull
-    private String id;
+public class JoinDto {
     @NotNull
     private String email;
     @NotNull
@@ -34,7 +31,6 @@ public class MemberRequestDto {
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
-                .id(id)
                 .email(email)
                 .pwd(passwordEncoder.encode(pwd))
                 .realName(realName)
@@ -44,7 +40,5 @@ public class MemberRequestDto {
                 .score(score)
                 .build();
     }
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, pwd);
-    }
+
 }

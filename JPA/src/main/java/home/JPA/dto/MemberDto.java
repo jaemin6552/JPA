@@ -17,14 +17,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MemberDto implements Serializable {
 
-
-    //@Size(min = 8, max = 8) // abcdefg
     @NotNull
     private String MemberRealName;
-
-    @NotNull
-    @Id
-    private String MemberId;
 
     @NotNull
     private String MemberNickName;
@@ -32,7 +26,7 @@ public class MemberDto implements Serializable {
     @NotNull
     private String phone;
 
-    @NotNull
+    @Id
     private String MemberEmail;
 
     @NotNull
@@ -47,7 +41,6 @@ public class MemberDto implements Serializable {
 
     public Member toEntity(){
         return Member.builder()
-                .id(MemberId)
                 .realName(MemberRealName)
                 .pwd(MemberPwd)
                 .email(MemberEmail)

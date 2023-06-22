@@ -16,13 +16,11 @@ import javax.persistence.*;
 @Table(name = "Member")
 public class Member extends BaseEntity{
 
-    @Id
-    String id;
     String realName;
     @Column(name = "nick_name",unique = true)
     String nickName;
     String pwd;
-    @Column(unique = true)
+    @Id
     String email;
     @Column(name = "phone_number")
     String phoneNumber;
@@ -38,7 +36,6 @@ public class Member extends BaseEntity{
     public MemberDto toDto(MemberGrade grade){
         String gradeId = grade.getGradeName();
         return MemberDto.builder()
-                .MemberId(id)
                 .MemberRealName(realName)
                 .MemberPwd(pwd)
                 .MemberEmail(email)

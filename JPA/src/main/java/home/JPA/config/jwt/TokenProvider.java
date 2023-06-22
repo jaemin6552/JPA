@@ -1,37 +1,51 @@
 package home.JPA.config.jwt;
 
 import home.JPA.dto.TokenDto;
+import home.JPA.entity.RefreshToken;
+import home.JPA.repository.RefreshTokenRedisRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Service
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30분
+
+    public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //일주일
     private final Key key;
 
+    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
+
+
     // 주의점: 여기서 @Value는 `springframework.beans.factory.annotation.Value`소속이다! lombok의 @Value와 착각하지 말것!
-    public TokenProvider(@Value("${jwt.secret}") String secretKey) {
+    @Autowired
+    public TokenProvider(@Value("${jwt.secret}") String secretKey,
+                         RefreshTokenRedisRepository refreshTokenRedisRepository) {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        this.refreshTokenRedisRepository = refreshTokenRedisRepository;
     }
 
     // 토큰 생성
@@ -40,25 +54,36 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-
+        log.info(authentication.getName());
+        log.info(authorities);
         long now = (new Date()).getTime();
 
 
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-
-        System.out.println(tokenExpiresIn);
-
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+        Optional<RefreshToken> refreshTokenOpt = refreshTokenRedisRepository.findById(authentication.getName());
+        String refreshToken;
 
+        if(refreshTokenOpt.isPresent()){
+            refreshToken = refreshTokenOpt.get().getRefreshToken();
+        }else {
+             refreshToken = Jwts.builder()
+                    .setSubject(authentication.getName())
+                    .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                    .signWith(key, SignatureAlgorithm.HS512)
+                    .compact();
+            refreshTokenRedisRepository.save(RefreshToken.createRefreshToken(authentication.getName(),
+                    refreshToken, REFRESH_TOKEN_EXPIRE_TIME));
+        }
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .tokenExpiresIn(tokenExpiresIn.getTime())
+                .refreshToken(refreshToken)
                 .build();
     }
 

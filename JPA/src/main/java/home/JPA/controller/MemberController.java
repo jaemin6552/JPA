@@ -1,10 +1,9 @@
 package home.JPA.controller;
 
 import home.JPA.dto.MemberDto;
-import home.JPA.dto.MemberRequestDto;
-import home.JPA.dto.MemberResponseDto;
+import home.JPA.dto.JoinDto;
+import home.JPA.dto.LoginDto;
 import home.JPA.dto.TokenDto;
-import home.JPA.entity.Member;
 import home.JPA.entity.MemberGrade;
 import home.JPA.service.MemberGradeService;
 import home.JPA.service.MemberService;
@@ -12,9 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -48,34 +49,22 @@ public class MemberController {
         return memberDto;
     }
 
-    @PostMapping(value = "/member")
-    public ResponseEntity<MemberDto> createMember(@Valid @RequestBody MemberDto memberDto) {
 
-//        LOGGER.info("[createProduct] perform {} of Around Hub API.", "createProduct");
-
-        // Validation Code Example
-        if (memberDto.getMemberId().equals("") || memberDto.getMemberId().isEmpty()) {
-//            LOGGER.error("[createProduct] failed Response :: productId is Empty");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(memberDto);
-        };
-
-        MemberDto response = memberService
-                .saveMember(memberDto.toEntity());
-
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
     @PostMapping("/signup")
-    public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto requestDto) {
-        return ResponseEntity.ok(memberService.signup(requestDto));
+    public ResponseEntity<LoginDto> signup(@RequestBody JoinDto joinDto) {
+        return ResponseEntity.ok(memberService.signup(joinDto));
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
-        return ResponseEntity.ok(memberService.login(requestDto));
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
+        return ResponseEntity.ok(memberService.login(loginDto));
     }
-
+    @GetMapping("/logout")
+    @CacheEvict
+    public ResponseEntity<Boolean> logout(){
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 //    @CacheEvict(value = "memberId", key = "#memberId")
     @DeleteMapping(value = "/memberId-del/{memberId}")
     public void deleteProduct(@PathVariable String memberId) {

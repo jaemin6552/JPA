@@ -1,15 +1,17 @@
 package home.JPA.service.impl;
 
+import home.JPA.config.jwt.TokenProvider;
 import home.JPA.dto.MemberDto;
-import home.JPA.dto.MemberRequestDto;
-import home.JPA.dto.MemberResponseDto;
+import home.JPA.dto.JoinDto;
+import home.JPA.dto.LoginDto;
 import home.JPA.dto.TokenDto;
 import home.JPA.entity.Member;
+import home.JPA.entity.RefreshToken;
 import home.JPA.handler.MemberDataHandler;
-import home.JPA.config.jwt.TokenProvider;
 import home.JPA.mapper.MemberMapper;
 import home.JPA.repository.MemberGradeRepository;
 import home.JPA.repository.MemberRepository;
+import home.JPA.repository.RefreshTokenRedisRepository;
 import home.JPA.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -21,6 +23,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import static home.JPA.config.jwt.TokenProvider.REFRESH_TOKEN_EXPIRE_TIME;
 
 @Service
 @AllArgsConstructor
@@ -38,46 +44,41 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
 
+    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
+
     private final MemberGradeRepository memberGradeRepository;
 
-
-    public MemberResponseDto signup(MemberRequestDto requestDto) {
-        if (memberRepository.existsByEmail(requestDto.getId())) {
+    @Override
+    public LoginDto signup(JoinDto requestDto) {
+        if (memberRepository.existsByEmail(requestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
         Member member = requestDto.toMember(passwordEncoder);
         member.setGrade(memberGradeRepository.getReferenceById(requestDto.getGradeId()));
-        return MemberResponseDto.of(memberRepository.save(member));
+        return LoginDto.of(memberRepository.save(member));
     }
-
-    public TokenDto login(MemberRequestDto requestDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = requestDto.toAuthentication();
+    @Override
+    public TokenDto login(LoginDto loginDto) {
+        UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
 
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
-
         return tokenProvider.generateTokenDto(authentication);
     }
-
     @Override
-    public MemberDto saveMember(Member member) {
+    public boolean updateByNickName(String Email,String nickName){
+        Member member = memberRepository.findByEmail(Email).orElseThrow(()-> new NoSuchElementException("유저가 없음"));
 
-        LOGGER.info("[saveProduct] memberDataHandler 로 상품 정보 저장 요청");
-        memberDataHandler.saveMember(member);
-
-        LOGGER.info("[saveProduct] Entity 객체를 DTO 객체로 변환 작업. productId : {}",
-                member.getId());
-
-        return member.toDto(member.getGrade());
+        member.setNickName(nickName);
+        memberRepository.save(member);
+        return true;
     }
 
-    @Override
-    public MemberDto getMember(String memberId) {
 
-        LOGGER.info("[getProduct] memberDataHandler 로 상품 정보 조회 요청");
-        Member member = memberDataHandler.getMember(memberId);
-        LOGGER.info("[getProduct] Entity 객체를 DTO 객체로 변환 작업. productId : {}",
-                member.getId());
+
+    @Override
+    public MemberDto getMember(String memberEmail) {
+        Member member = memberDataHandler.getMember(memberEmail);
         return member.toDto(member.getGrade());
     }
 
@@ -85,6 +86,7 @@ public class MemberServiceImpl implements MemberService {
     public void deleteById(String id) {
         memberDataHandler.deleteById(id);
     }
+
 
     @Override
     public List<MemberDto> getAll() {

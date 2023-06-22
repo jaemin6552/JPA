@@ -1,6 +1,5 @@
 package home.JPA.handler.impl;
 
-import home.JPA.constant.Authority;
 import home.JPA.dao.MemberDAO;
 import home.JPA.entity.Member;
 import home.JPA.handler.MemberDataHandler;

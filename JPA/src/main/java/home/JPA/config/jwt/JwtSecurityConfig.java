@@ -1,7 +1,5 @@
 package home.JPA.config.jwt;
 
-import home.JPA.config.jwt.JwtFilter;
-import home.JPA.config.jwt.TokenProvider;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
