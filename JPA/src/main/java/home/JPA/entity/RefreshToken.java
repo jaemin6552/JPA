@@ -13,18 +13,20 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 public class RefreshToken {
+
     @Id
     private String id;
 
-    private String refreshToken;
+    private String email;
+
 
     @TimeToLive
     private Long expiration;
 
     public static RefreshToken createRefreshToken(String username, String refreshToken, Long remainingMilliSeconds) {
         return RefreshToken.builder()
-                .id(username)
-                .refreshToken(refreshToken)
+                .email(username)
+                .id(refreshToken)
                 .expiration(remainingMilliSeconds / 1000)
                 .build();
     }

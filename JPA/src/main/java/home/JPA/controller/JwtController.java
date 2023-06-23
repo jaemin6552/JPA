@@ -6,6 +6,7 @@ import home.JPA.dto.LoginDto;
 import home.JPA.dto.TokenDto;
 import home.JPA.entity.RefreshToken;
 import home.JPA.repository.RefreshTokenRedisRepository;
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RestController
@@ -26,12 +28,9 @@ public class JwtController {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
     @PostMapping("")
-    public ResponseEntity<TokenDto> reissueAccessToken(Authentication authentication, @RequestBody String refreshToken) throws IOException {
-        if(tokenProvider.validateRefreshToken(refreshToken)
-        && refreshTokenRedisRepository.findById(authentication.getName()).isPresent()){
-            return ResponseEntity.status(HttpStatus.OK).body(tokenProvider.generateTokenDto(authentication));
-        }
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    public ResponseEntity<?> reissueAccessToken(@RequestHeader("Authorization") String header) throws IOException {
+        System.out.println("컨트롤러에 값들어옴");
+        return tokenProvider.reissue(header.substring(7));
     }
 
 }
