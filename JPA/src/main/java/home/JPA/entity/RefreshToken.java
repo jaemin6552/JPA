@@ -17,7 +17,7 @@ public class RefreshToken {
     @Id
     private String id;
 
-    private String email;
+    private String refreshToken;
 
 
     @TimeToLive
@@ -25,8 +25,8 @@ public class RefreshToken {
 
     public static RefreshToken createRefreshToken(String username, String refreshToken, Long remainingMilliSeconds) {
         return RefreshToken.builder()
-                .email(username)
-                .id(refreshToken)
+                .id(username)
+                .refreshToken(refreshToken)
                 .expiration(remainingMilliSeconds / 1000)
                 .build();
     }

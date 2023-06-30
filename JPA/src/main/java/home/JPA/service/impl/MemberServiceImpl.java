@@ -9,7 +9,7 @@ import home.JPA.entity.Member;
 import home.JPA.entity.RefreshToken;
 import home.JPA.handler.MemberDataHandler;
 import home.JPA.mapper.MemberMapper;
-import home.JPA.repository.MemberGradeRepository;
+import home.JPA.repository.MemberRankRepository;
 import home.JPA.repository.MemberRepository;
 import home.JPA.repository.RefreshTokenRedisRepository;
 import home.JPA.service.MemberService;
@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
 
-    private final MemberGradeRepository memberGradeRepository;
+    private final MemberRankRepository memberRankRepository;
 
     @Override
     public LoginDto signup(JoinDto requestDto) {
@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         Member member = requestDto.toMember(passwordEncoder);
-        member.setGrade(memberGradeRepository.getReferenceById(requestDto.getGradeId()));
+        member.setMemberRank(memberRankRepository.getReferenceById(requestDto.getGradeId()));
         return LoginDto.of(memberRepository.save(member));
     }
     @Override
@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto getMember(String memberEmail) {
         Member member = memberDataHandler.getMember(memberEmail);
-        return member.toDto(member.getGrade());
+        return member.toDto(member.getMemberRank());
     }
 
     @Override

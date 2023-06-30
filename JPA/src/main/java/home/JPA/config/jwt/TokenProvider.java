@@ -129,11 +129,12 @@ public class TokenProvider {
     }
     public ResponseEntity<?> reissue(String refreshToken) throws IOException {
         //1. Request Header 에서 JWT Token 추출
+       Claims claims = parseClaims(refreshToken);
 
-            RefreshToken redisRefreshToken = refreshTokenRedisRepository.findById(refreshToken).orElseThrow(()->new RuntimeException("값없음"));
+            RefreshToken redisRefreshToken = refreshTokenRedisRepository.findById(claims.getSubject()).orElseThrow(()->new RuntimeException("값없음"));
 
             if (redisRefreshToken != null) {
-                String accessToken = generateAccessToken(redisRefreshToken.getEmail());
+                String accessToken = generateAccessToken(redisRefreshToken.getId());
 
 //                    // 6. Redis RefreshToken update
 //                    refreshTokenRedisRepository.save(RefreshToken.builder()

@@ -2,21 +2,17 @@ package home.JPA.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Setter
+@Entity
 @Getter
+@Setter
+@Table(name = "language")
 public class Language {
     @Id
-    String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-
-
-
-
+    private String name;
 }

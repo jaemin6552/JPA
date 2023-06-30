@@ -41,10 +41,10 @@ public class JwtFilter extends OncePerRequestFilter {
         String jwt = resolveToken(request);
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateAccessToken(jwt,response)) {
-                //if (!(request.getRequestURI().equals("/refresh"))) {
+                if (!(request.getRequestURI().equals("/refresh"))) {
                 Authentication authentication = tokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            //}
+            }
         }
 
         filterChain.doFilter(request, response);
