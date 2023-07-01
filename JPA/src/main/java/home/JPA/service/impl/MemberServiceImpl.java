@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         Member member = requestDto.toMember(passwordEncoder);
-        member.setMemberRank(memberRankRepository.getReferenceById(requestDto.getGradeId()));
+//        member.setMemberRank(memberRankRepository.getReferenceById(member.getMemberRank().getGrade()));
         return LoginDto.of(memberRepository.save(member));
     }
     @Override

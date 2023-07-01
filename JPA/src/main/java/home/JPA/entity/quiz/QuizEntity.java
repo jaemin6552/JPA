@@ -2,6 +2,7 @@ package home.JPA.entity.quiz;
 
 
 
+import home.JPA.dto.QuizDto;
 import home.JPA.entity.BaseEntity;
 import home.JPA.entity.Language;
 import home.JPA.entity.example.ExEntity;
@@ -39,4 +40,14 @@ public class QuizEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "quizEntity")
     private List<ExEntity> exEntityList;
+
+    public QuizDto toDto(){
+        return QuizDto.builder()
+                .title(quiz)
+                .answer(answer)
+                .explanation(explanation)
+                .language_id(language.getName())
+                .id(id)
+                .build();
+    }
 }

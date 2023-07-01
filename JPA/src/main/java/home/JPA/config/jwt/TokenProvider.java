@@ -27,6 +27,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -68,15 +69,19 @@ public class TokenProvider {
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
-
-        String refreshToken = Jwts.builder()
+        String refreshToken;
+        Optional<RefreshToken> redisRefresh = refreshTokenRedisRepository.findById(authentication.getName());
+        if(redisRefresh.isPresent()){
+               refreshToken = redisRefresh.get().getRefreshToken();
+        }else {
+                refreshToken = Jwts.builder()
                     .setSubject(authentication.getName())
                     .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                     .signWith(key, SignatureAlgorithm.HS512)
                     .compact();
             refreshTokenRedisRepository.save(RefreshToken.createRefreshToken(authentication.getName(),
                     refreshToken, REFRESH_TOKEN_EXPIRE_TIME));
-
+        }
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
