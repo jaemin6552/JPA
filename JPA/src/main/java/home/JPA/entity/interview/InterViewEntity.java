@@ -1,5 +1,6 @@
 package home.JPA.entity.interview;
 
+import home.JPA.dto.InterViewDto;
 import home.JPA.entity.BaseEntity;
 import home.JPA.entity.Language;
 import home.JPA.entity.comment.CommentEntity;
@@ -29,4 +30,12 @@ public class InterViewEntity extends BaseEntity {
     @OneToMany(mappedBy = "interViewEntity")
     private List<CommentEntity> commentEntityList;
 
+    public InterViewDto toDto(){
+        return InterViewDto.builder()
+                .id(id)
+                .title(quiz)
+                .answer(answer)
+                .language_id(language.getName())
+                .build();
+    }
 }

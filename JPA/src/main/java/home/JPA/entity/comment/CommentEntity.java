@@ -1,5 +1,6 @@
 package home.JPA.entity.comment;
 
+import home.JPA.dto.CommentDto;
 import home.JPA.entity.BaseEntity;
 import home.JPA.entity.Feelings;
 import home.JPA.entity.Member;
@@ -30,5 +31,13 @@ public class CommentEntity extends BaseEntity {
     private InterViewEntity interViewEntity;
     @OneToMany(mappedBy = "commentEntity")
     private List<Feelings> feelingsList;
+
+    public CommentDto toDto(){
+        return CommentDto.builder()
+                .detail(detail)
+                .nickName(member.getNickName())
+                .id(id)
+                .build();
+    }
 
 }

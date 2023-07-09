@@ -7,11 +7,11 @@ import home.JPA.dto.LoginDto;
 import home.JPA.dto.TokenDto;
 import home.JPA.entity.Member;
 import home.JPA.entity.RefreshToken;
+import home.JPA.entity.memberQuiz.MemberQuizEntity;
+import home.JPA.entity.quiz.QuizEntity;
 import home.JPA.handler.MemberDataHandler;
 import home.JPA.mapper.MemberMapper;
-import home.JPA.repository.MemberRankRepository;
-import home.JPA.repository.MemberRepository;
-import home.JPA.repository.RefreshTokenRedisRepository;
+import home.JPA.repository.*;
 import home.JPA.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -44,18 +44,20 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
 
-    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
-
     private final MemberRankRepository memberRankRepository;
+
+    private final MemberQuizRepository memberQuizRepository;
+
+    private final QuizRepository quizRepository;
 
     @Override
     public LoginDto signup(JoinDto requestDto) {
         if (memberRepository.existsByEmail(requestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
-
         Member member = requestDto.toMember(passwordEncoder);
-//        member.setMemberRank(memberRankRepository.getReferenceById(member.getMemberRank().getGrade()));
+
+
         return LoginDto.of(memberRepository.save(member));
     }
     @Override
