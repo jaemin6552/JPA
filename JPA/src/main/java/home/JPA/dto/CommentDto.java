@@ -10,8 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CommentDto {
-    private long id;
+
     private String detail;
 
+    private String email;
+
     private String nickName;
+
+    private long interViewId;
 }

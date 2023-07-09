@@ -36,7 +36,7 @@ public class CommentEntity extends BaseEntity {
         return CommentDto.builder()
                 .detail(detail)
                 .nickName(member.getNickName())
-                .id(id)
+                .interViewId(interViewEntity.getId())
                 .build();
     }
 

@@ -22,8 +22,13 @@ public class InterViewController {
     public ResponseEntity<List<InterViewDto>> getInterView(@RequestParam String languageId){
         return ResponseEntity.ok(interViewService.getInterView(languageId));
     }
-    @GetMapping("/comment/{commentId}")
-    public ResponseEntity<List<CommentDto>> getComment(@PathVariable long commentId){
-        return ResponseEntity.ok(commentService.getComment(commentId));
+    @GetMapping("/comment/{interViewId}")
+    public ResponseEntity<List<CommentDto>> getComment(@PathVariable long interViewId){
+        return ResponseEntity.ok(commentService.getComment(interViewId));
+    }
+    @PostMapping("")
+    public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto){
+        commentService.saveCommentByMemberAndInterviewId(commentDto.getEmail(), commentDto.getInterViewId(), commentDto.getDetail());
+        return ResponseEntity.ok(true);
     }
 }

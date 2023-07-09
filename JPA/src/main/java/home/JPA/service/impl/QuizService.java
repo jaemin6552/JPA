@@ -24,7 +24,6 @@ public class QuizService {
     private QuizRepository quizRepository;
     private MemberQuizRepository memberQuizRepository;
 
-    private MemberRepository memberRepository;
     public List<QuizDto> getUnansweredQuizzes(String email,String language) {
         List<MemberQuizEntity> correctMemberQuizzes = memberQuizRepository.findCorrectQuizzesForMemberId(email);
         List<QuizEntity> correctQuizzes = correctMemberQuizzes.stream()
