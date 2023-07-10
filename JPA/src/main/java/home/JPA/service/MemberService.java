@@ -19,5 +19,6 @@ public interface MemberService {
     public LoginDto signup(JoinDto requestDto);
     public TokenDto login(LoginDto requestDto);
     public List<MemberDto> getAll();
+    public boolean updateByScore(String email,int score);
 
 }

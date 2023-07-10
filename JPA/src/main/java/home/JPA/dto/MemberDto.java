@@ -2,6 +2,7 @@ package home.JPA.dto;
 
 import com.sun.istack.NotNull;
 import home.JPA.entity.Member;
+import home.JPA.entity.UnivEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 

@@ -28,8 +28,16 @@ public class MyPageController {
 
     @GetMapping("/nick-name/{nickName}")
     public ResponseEntity<String> signup(@PathVariable String nickName, @AuthenticationPrincipal UserDetails userDetails) {
-            String name = userDetails.getUsername();
-            memberService.updateByNickName(name,nickName);
+            String email = userDetails.getUsername();
+            memberService.updateByNickName(email,nickName);
         return ResponseEntity.ok("이름 변경 완료");
+    }
+    @PostMapping("/score")
+    public ResponseEntity<String> getScore(@RequestParam("score") int score
+                                            ,@AuthenticationPrincipal UserDetails userDetails){
+        String email = userDetails.getUsername();
+        memberService.updateByScore(email,score);
+        return ResponseEntity.ok("점수 반영 완료");
+
     }
 }

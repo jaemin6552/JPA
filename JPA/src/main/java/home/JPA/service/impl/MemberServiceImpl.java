@@ -16,6 +16,7 @@ import home.JPA.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -56,8 +57,7 @@ public class MemberServiceImpl implements MemberService {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
         Member member = requestDto.toMember(passwordEncoder);
-
-
+        member.setMemberRank(memberRankRepository.getReferenceById(1L));
         return LoginDto.of(memberRepository.save(member));
     }
     @Override
@@ -70,12 +70,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean updateByNickName(String Email,String nickName){
         Member member = memberRepository.findByEmail(Email).orElseThrow(()-> new NoSuchElementException("유저가 없음"));
-
+        if(memberRepository.findByNickName(nickName).isPresent()){
+            return false;
+        }
         member.setNickName(nickName);
         memberRepository.save(member);
         return true;
     }
+    @Override
+    public boolean updateByScore(String email,int score){
+        Member member = memberRepository.findByEmail(email).orElseThrow(()-> new NoSuchElementException("유저가 없음"));
 
+        member.setScore(member.getScore()+score);
+        memberRepository.save(member);
+        return true;
+    }
 
 
     @Override

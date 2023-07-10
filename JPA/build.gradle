@@ -51,7 +51,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-tasks.compileJava {
-	options.compilerArgs << '-parameters'
-}

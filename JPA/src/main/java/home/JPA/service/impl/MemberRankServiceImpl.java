@@ -22,7 +22,7 @@ public class MemberRankServiceImpl implements MemberRankService {
     }
 
     @Override
-    public int getGradeNum(String id) {
+    public int getGradeNum(long id) {
         List<Member>members = memberGradeRepository.getReferenceById(id).getMemberList();
         if(members.isEmpty()) return 0;
         return members.size();
