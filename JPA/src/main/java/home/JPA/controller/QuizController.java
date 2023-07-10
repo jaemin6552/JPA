@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,10 @@ import java.util.List;
 public class QuizController {
    private final QuizService quizService;
     @GetMapping("")
-    public ResponseEntity<List<QuizDto>> signup(@AuthenticationPrincipal UserDetails userDetails,
+    public ResponseEntity<List<QuizDto>> getQuiz(@AuthenticationPrincipal UserDetails userDetails,
                                                 @RequestParam String language) {
        String name = userDetails.getUsername();
        return ResponseEntity.ok(quizService.getUnansweredQuizzes(name,language));
     }
+
 }

@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll() //멤버 회원가입,로그인
                 .antMatchers("/thymeleaf/**","/refresh").permitAll()
-                .antMatchers("inter-view/**").permitAll()
+                .antMatchers("inter-view/**","/study/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
                 .antMatchers("/sign-api/sign-in", "/sign-api/sign-up",
                         "/sign-api/exception").permitAll()
