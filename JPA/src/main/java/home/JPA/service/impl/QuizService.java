@@ -1,6 +1,7 @@
 package home.JPA.service.impl;
 
 import home.JPA.dto.QuizDto;
+import home.JPA.entity.Member;
 import home.JPA.entity.memberQuiz.MemberQuizEntity;
 import home.JPA.entity.quiz.QuizEntity;
 import home.JPA.repository.MemberQuizRepository;
@@ -33,14 +34,19 @@ public class QuizService {
         }
         return quizDtoList;
     }
-    public boolean updateQuizMember(String email,long quizId){
-        MemberQuizEntity memberQuizEntity = new MemberQuizEntity();
-        memberQuizEntity.setTry(true);
-        memberQuizEntity.setRight(true);
-        memberQuizEntity.setMember(memberRepository.findByEmail(email).orElseThrow(()-> new NoSuchElementException("유저없음")));
-        memberQuizEntity.setQuizEntity(quizRepository.getReferenceById(quizId));
-        memberQuizRepository.save(memberQuizEntity);
-        return true;
+    public void updateQuizMember(String email,List<Long> quizId){
+        List<MemberQuizEntity> memberQuizEntities = new ArrayList<>();
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("유저없음"));
+
+        for (Long aLong : quizId) {
+            MemberQuizEntity memberQuizEntity = new MemberQuizEntity();
+            memberQuizEntity.setTry(true);
+            memberQuizEntity.setRight(true);
+            memberQuizEntity.setMember(member);
+            memberQuizEntity.setQuizEntity(quizRepository.getReferenceById(aLong));
+            memberQuizEntities.add(memberQuizEntity);
+        }
+        memberQuizRepository.saveAll(memberQuizEntities);
     }
     public List<QuizDto> getUnansweredQuizzes(String email,String language) {
         List<MemberQuizEntity> correctMemberQuizzes = memberQuizRepository.findCorrectQuizzesForMemberId(email);

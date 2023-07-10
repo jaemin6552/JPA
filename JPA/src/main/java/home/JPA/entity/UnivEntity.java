@@ -17,7 +17,6 @@ public class UnivEntity extends BaseEntity{
     private long id;
 
     private String name;
-    private String address;
 
     @OneToMany(mappedBy = "univEntity")
     private List<Member> memberList;

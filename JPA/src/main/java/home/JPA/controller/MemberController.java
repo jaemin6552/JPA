@@ -27,7 +27,6 @@ public class MemberController {
 
     private final MemberRankService memberRankService;
 
-    // http://localhost:8080/api/v1/product-api/product/{productId}
 //    @Cacheable(value = "memberId", key = "#memberId")
     @GetMapping(value = "/member/{memberId}")
     public MemberDto getMember(@PathVariable String memberId) {
@@ -37,11 +36,7 @@ public class MemberController {
 
         MemberDto memberDto = memberService.getMember(memberId);
 
-//        LOGGER.info(
-//                "[getProduct] Response :: productId = {}, productName = {}, productPrice = {}, productStock = {}, Response Time = {}ms",
-//                memberDto.getProductId(),
-//                memberDto.getProductName(), memberDto.getProductPrice(), memberDto.getProductStock(),
-//                (System.currentTimeMillis() - startTime));
+
         return memberDto;
     }
 
