@@ -26,9 +26,5 @@ public class InterViewController {
     public ResponseEntity<List<CommentDto>> getComment(@PathVariable long interViewId){
         return ResponseEntity.ok(commentService.getComment(interViewId));
     }
-    @PostMapping("")
-    public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto){
-        commentService.saveCommentByMemberAndInterviewId(commentDto.getEmail(), commentDto.getInterViewId(), commentDto.getDetail());
-        return ResponseEntity.ok(true);
-    }
+
 }

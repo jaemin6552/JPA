@@ -1,7 +1,11 @@
 package home.JPA.repository;
 
 import home.JPA.entity.Member;
+import home.JPA.entity.quiz.QuizEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,7 +14,8 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
 
-
+    @Query(value = "SELECT m FROM Member m ORDER BY m.score DESC")
+    List<Member> findMembersOrderByScore();
     // 조회
     Optional<Member> findByEmail(String email);
 

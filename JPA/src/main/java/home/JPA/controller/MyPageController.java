@@ -1,9 +1,11 @@
 package home.JPA.controller;
 
+import home.JPA.dto.CommentDto;
 import home.JPA.dto.JoinDto;
 import home.JPA.dto.LoginDto;
 import home.JPA.entity.Member;
 import home.JPA.service.MemberService;
+import home.JPA.service.impl.CommentService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -25,6 +27,7 @@ import java.security.Security;
 @Slf4j
 public class MyPageController {
     private final MemberService memberService;
+    private final CommentService commentService;
 
     @GetMapping("/nick-name/{nickName}")
     public ResponseEntity<String> signup(@PathVariable String nickName, @AuthenticationPrincipal UserDetails userDetails) {
@@ -38,6 +41,10 @@ public class MyPageController {
         String email = userDetails.getUsername();
         memberService.updateByScore(email,score);
         return ResponseEntity.ok("점수 반영 완료");
-
+    }
+    @PostMapping("")
+    public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto){
+        commentService.saveCommentByMemberAndInterviewId(commentDto.getEmail(), commentDto.getInterViewId(), commentDto.getDetail());
+        return ResponseEntity.ok(true);
     }
 }

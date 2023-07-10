@@ -20,16 +20,20 @@ import java.util.List;
 @Table(name = "Member")
 public class Member extends BaseEntity{
 
-    String realName;
+    private String realName;
     @Column(name = "nick_name",unique = true)
-    String nickName;
-    String pwd;
+    private String nickName;
+    private String pwd;
     @Id
-    String email;
+    private String email;
     @Column(name = "phone_number")
-    String phoneNumber;
+    private String phoneNumber;
 
     private int score;
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberRating> memberRatingList;
+
     @OneToMany(mappedBy = "member")
     private List<CommentEntity> commentEntityList;
     @OneToMany(mappedBy = "member")

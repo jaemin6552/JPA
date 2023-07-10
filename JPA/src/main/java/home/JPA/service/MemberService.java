@@ -12,6 +12,8 @@ public interface MemberService {
 
     MemberDto getMember(String memberId);
 
+    public void updateRating();
+
     void deleteById(String memberId);
 
     boolean updateByNickName(String Email,String nickName);
