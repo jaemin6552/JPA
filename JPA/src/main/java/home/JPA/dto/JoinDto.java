@@ -25,6 +25,8 @@ public class JoinDto {
     @NotNull
     private String phone;
 
+    private String univName;
+
     private String gradeId = "0";
     @NotNull
     private int score = 0;

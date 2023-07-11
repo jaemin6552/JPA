@@ -21,5 +21,7 @@ public class MemberRating extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
+
+
     private Integer rank;
 }

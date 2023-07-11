@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRankRepository memberRankRepository;
 
-    private final MemberQuizRepository memberQuizRepository;
+    private final UnivEntityRepository univEntityRepository;
 
     private final QuizRepository quizRepository;
 
@@ -59,6 +59,7 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = requestDto.toMember(passwordEncoder);
         member.setMemberRank(memberRankRepository.getReferenceById(1L));
+        member.setUnivEntity(univEntityRepository.findByName(requestDto.getUnivName()));
         return LoginDto.of(memberRepository.save(member));
     }
     @Override
@@ -92,7 +93,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Scheduled(fixedRate = 60 * 1000) // 12시간마다 실행
+    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
     public void updateRating() {
         // 멤버 등수 업데이트 작업 수행
         List<Member> memberList = memberRepository.findMembersOrderByScore();

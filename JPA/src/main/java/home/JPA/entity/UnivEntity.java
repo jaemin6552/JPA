@@ -19,6 +19,9 @@ public class UnivEntity extends BaseEntity{
     private String name;
 
     @OneToMany(mappedBy = "univEntity")
+    private List<UnivRating> univRatingList;
+
+    @OneToMany(mappedBy = "univEntity",fetch = FetchType.EAGER)
     private List<Member> memberList;
 
     @ManyToOne
