@@ -1,5 +1,6 @@
 package home.JPA.service.impl;
 
+import home.JPA.dto.UnivRatingDto;
 import home.JPA.entity.Member;
 import home.JPA.entity.UnivEntity;
 import home.JPA.entity.UnivRating;
@@ -37,5 +38,18 @@ public class UnivService {
                 univRatingList.add(univRating);
         }
             univRatingRepository.saveAll(univRatingList);
+    }
+    public List<UnivRatingDto> getUnivRating(){
+
+        List<UnivRating> univRatingList = univRatingRepository.findAll();
+        if(univRatingList.size() == 0) return null;
+
+        List<UnivRatingDto> univRatingDtos = new ArrayList<>();
+        for(UnivRating uR : univRatingList){
+            UnivRatingDto univRatingDto = uR.toDto();
+            univRatingDto.setScore(uR.getScore());
+            univRatingDtos.add(univRatingDto);
+        }
+        return univRatingDtos;
     }
 }

@@ -13,8 +13,6 @@ public class CommentDto {
 
     private String detail;
 
-    private String email;
-
     private String nickName;
 
     private long interViewId;

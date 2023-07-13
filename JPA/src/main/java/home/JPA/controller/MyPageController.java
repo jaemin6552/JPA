@@ -47,8 +47,10 @@ public class MyPageController {
         return ResponseEntity.ok("점수 반영 완료");
     }
     @PostMapping("")
-    public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto){
-        commentService.saveCommentByMemberAndInterviewId(commentDto.getEmail(), commentDto.getInterViewId(), commentDto.getDetail());
+    public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto
+                                                ,@AuthenticationPrincipal UserDetails userDetails){
+        commentService.saveCommentByMemberAndInterviewId(userDetails.getUsername(),
+                            commentDto.getInterViewId(), commentDto.getDetail());
         return ResponseEntity.ok(true);
     }
 }

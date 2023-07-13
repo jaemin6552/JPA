@@ -1,6 +1,7 @@
 package home.JPA.entity;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
+import home.JPA.dto.UnivRatingDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "Univ_rating")
-public class UnivRating extends BaseEntity implements Comparable<UnivRating> {
+public class UnivRating extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,10 @@ public class UnivRating extends BaseEntity implements Comparable<UnivRating> {
     private String rank;
 
     private int score;
-    @Override
-    public int compareTo(UnivRating o) {
-        return Integer.compare(o.score,this.score);
+    public UnivRatingDto toDto(){
+        return UnivRatingDto.builder()
+                .univName(univEntity.getName())
+                .rankName(rank)
+                .build();
     }
 }
