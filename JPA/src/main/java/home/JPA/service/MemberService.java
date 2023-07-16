@@ -1,10 +1,8 @@
 package home.JPA.service;
 
-import home.JPA.dto.MemberDto;
-import home.JPA.dto.JoinDto;
-import home.JPA.dto.LoginDto;
-import home.JPA.dto.TokenDto;
+import home.JPA.dto.*;
 import home.JPA.entity.Member;
+import home.JPA.entity.MemberRating;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -12,13 +10,15 @@ import java.util.Optional;
 
 public interface MemberService {
 
-    MemberDto getMember(String memberId);
+    public MemberDto getMember(String memberId);
 
     public void updateRating();
 
-    void deleteById(String memberId);
+    public void deleteById(String memberId);
 
-    ResponseEntity<String> updateByNickName(String Email, String nickName);
+    public List<MemberRatingDto> getMemberRating();
+
+    public ResponseEntity<String> updateByNickName(String Email, String nickName);
 
     public LoginDto signup(JoinDto requestDto);
     public TokenDto login(LoginDto requestDto);

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static home.JPA.config.jwt.TokenProvider.REFRESH_TOKEN_EXPIRE_TIME;
 
@@ -133,6 +134,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteById(String id) {
         memberDataHandler.deleteById(id);
+    }
+
+    @Override
+    public List<MemberRatingDto> getMemberRating() {
+        List<MemberRating> memberRatingList = memberRatingRepository.findAll();
+        return memberRatingList.stream()
+                        .map(MemberRating::toDto)
+                        .collect(Collectors.toList());
     }
 
 
