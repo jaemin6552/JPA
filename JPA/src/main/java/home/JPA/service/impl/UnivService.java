@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class UnivService {
 
     private UnivRatingRepository univRatingRepository;
 
-    @Scheduled(fixedRate = 60 * 1000) // 12시간마다 실행
+    @Scheduled(fixedRate = 12 * 60 * 1000) // 12시간마다 실행
     public void updateUnivRating() {
         // 멤버 등수 업데이트 작업 수행
         List<UnivRating> univRatingList = new ArrayList<>();
@@ -50,6 +51,7 @@ public class UnivService {
             univRatingDto.setScore(uR.getScore());
             univRatingDtos.add(univRatingDto);
         }
+        Collections.sort(univRatingDtos);
         return univRatingDtos;
     }
 }

@@ -5,9 +5,11 @@ import home.JPA.dto.*;
 import home.JPA.entity.Member;
 import home.JPA.entity.MemberRating;
 import home.JPA.entity.RefreshToken;
+import home.JPA.entity.UnivEntity;
 import home.JPA.entity.memberQuiz.MemberQuizEntity;
 import home.JPA.entity.quiz.QuizEntity;
 import home.JPA.entity.rank.MemberRank;
+import home.JPA.entity.rank.UnivRank;
 import home.JPA.handler.MemberDataHandler;
 import home.JPA.mapper.MemberMapper;
 import home.JPA.repository.*;
@@ -52,6 +54,8 @@ public class MemberServiceImpl implements MemberService {
 
     private final UnivEntityRepository univEntityRepository;
 
+    private final UnivRankRepository univRankRepository;
+
     private final QuizRepository quizRepository;
 
     @Override
@@ -86,11 +90,24 @@ public class MemberServiceImpl implements MemberService {
     public boolean updateByScore(String email,int score){
         Member member = memberRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"유저가 없음"));
         member.setScore(member.getScore()+score);
+        UnivEntity univEntity = univEntityRepository.findByName(member.getUnivEntity().getName());
+        List<Member> univMemberList = univEntity.getMemberList();
+        int totalScore = 0;
+        for(Member m : univMemberList){
+            totalScore = m.getScore();
+        }
+
+        UnivRank univRank = univRankRepository.findById(univEntity.getUnivRank().getId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"기준점이 없음"));
+        if(totalScore > univRank.getScore()){
+            UnivRank newUnivRank = univRankRepository.findById(univEntity.getUnivRank().getId()+1).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"이미 최대 티어입니다."));
+            univEntity.setUnivRank(newUnivRank);
+        }
         MemberRank memberRank = memberRankRepository.findById(member.getMemberRank().getId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"기준점이 없음"));
         if(member.getScore() > memberRank.getScore()) {
             MemberRank newMemberRank = memberRankRepository.findById(member.getMemberRank().getId()+1).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"이미 최대 티어입니다."));
             member.setMemberRank(newMemberRank);
         }
+        univEntityRepository.save(univEntity);
         memberRepository.save(member);
         return true;
     }
