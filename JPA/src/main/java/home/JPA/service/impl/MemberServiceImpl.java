@@ -96,14 +96,11 @@ public class MemberServiceImpl implements MemberService {
         for(Member m : univMemberList){
             totalScore = m.getScore();
         }
-
-        UnivRank univRank = univRankRepository.findById(univEntity.getUnivRank().getId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"기준점이 없음"));
-        if(totalScore > univRank.getScore()){
+        if(totalScore > univEntity.getUnivRank().getScore()){
             UnivRank newUnivRank = univRankRepository.findById(univEntity.getUnivRank().getId()+1).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"이미 최대 티어입니다."));
             univEntity.setUnivRank(newUnivRank);
         }
-        MemberRank memberRank = memberRankRepository.findById(member.getMemberRank().getId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"기준점이 없음"));
-        if(member.getScore() > memberRank.getScore()) {
+        if(member.getScore() > member.getMemberRank().getScore()) {
             MemberRank newMemberRank = memberRankRepository.findById(member.getMemberRank().getId()+1).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"이미 최대 티어입니다."));
             member.setMemberRank(newMemberRank);
         }
