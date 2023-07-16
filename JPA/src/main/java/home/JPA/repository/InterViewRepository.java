@@ -9,9 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InterViewRepository extends JpaRepository<InterViewEntity,Long> {
     @Query(value = "SELECT i FROM InterViewEntity i WHERE i.language.name = :languageId ORDER BY RAND()")
-    List<InterViewEntity> findByLanguageName(@Param("languageId") String languageId, Pageable pageable);
+    Optional<List<InterViewEntity>> findByLanguageName(@Param("languageId") String languageId, Pageable pageable);
 }

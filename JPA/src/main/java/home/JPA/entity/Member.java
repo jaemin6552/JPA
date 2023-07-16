@@ -63,5 +63,12 @@ public class Member extends BaseEntity{
                 .gradeId(gradeId)
                 .build();
     }
+    public MemberDto toDto(){
+        return MemberDto.builder()
+                .MemberPwd(pwd)
+                .MemberEmail(email)
+                .authority(authority.name())
+                .build();
+    }
 
 }

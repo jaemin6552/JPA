@@ -15,6 +15,7 @@ import home.JPA.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public LoginDto signup(JoinDto requestDto) {
         if (memberRepository.existsByEmail(requestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"이미 가입된 유저 입니다.");
         }
         Member member = requestDto.toMember(passwordEncoder);
         member.setMemberRank(memberRankRepository.getReferenceById(1L));
@@ -65,27 +67,28 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public TokenDto login(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
-
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
+        System.out.println(authentication);
         return tokenProvider.generateTokenDto(authentication);
     }
     @Override
-    public boolean updateByNickName(String Email,String nickName){
-        Member member = memberRepository.findByEmail(Email).orElseThrow(()-> new NoSuchElementException("유저가 없음"));
+    public ResponseEntity<String> updateByNickName(String Email,String nickName){
+        Member member = memberRepository.findByEmail(Email).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"유저가 존재하지않습니다."));
+
         if(memberRepository.findByNickName(nickName).isPresent()){
-            return false;
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 닉네임입니다.");
         }
         member.setNickName(nickName);
         memberRepository.save(member);
-        return true;
+        return ResponseEntity.ok("닉네임 저장 완료");
     }
     @Override
     public boolean updateByScore(String email,int score){
-        Member member = memberRepository.findByEmail(email).orElseThrow(()-> new NoSuchElementException("유저가 없음"));
+        Member member = memberRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"유저가 없음"));
         member.setScore(member.getScore()+score);
-        MemberRank memberRank = memberRankRepository.findById(member.getMemberRank().getId()).orElseThrow(()->new NoSuchElementException("기준점이 없음"));
+        MemberRank memberRank = memberRankRepository.findById(member.getMemberRank().getId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"기준점이 없음"));
         if(member.getScore() > memberRank.getScore()) {
-            MemberRank newMemberRank = memberRankRepository.findById(member.getMemberRank().getId()+1).orElseThrow(()->new NoSuchElementException("기준점이 없음"));
+            MemberRank newMemberRank = memberRankRepository.findById(member.getMemberRank().getId()+1).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"이미 최대 티어입니다."));
             member.setMemberRank(newMemberRank);
         }
         memberRepository.save(member);

@@ -1,10 +1,10 @@
 package home.JPA.service.impl;
 
-import home.JPA.constant.CacheKey;
+
 import home.JPA.entity.Member;
 import home.JPA.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -20,17 +20,22 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
-    @Cacheable(value = CacheKey.USER, key = "#username", unless = "#result == null")
+    private final RedisTemplate<String,Object> redisTemplate;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository.findByEmail(username)
-                .map(this::createUserDetails)
-                .orElseThrow(() -> new UsernameNotFoundException(username + " 을 DB에서 찾을 수 없습니다"));
+        Member member = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username + " 을 DB에서 찾을 수 없습니다"));
+        UserDetails userDetails = createUserDetails(member);
+
+        redisTemplate.opsForValue().set("user::" + username, userDetails);
+        System.out.println(userDetails.getAuthorities().toString());
+        redisTemplate.opsForValue().set("auth::"+username,userDetails.getAuthorities().toString());
+        return userDetails;
     }
+
 
     private UserDetails createUserDetails(Member member) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().name());
-
         return new User(
                 String.valueOf(member.getEmail()),
                 member.getPwd(),

@@ -19,12 +19,16 @@ public class InterViewController {
     private final CommentService commentService;
 
     @GetMapping("")
-    public ResponseEntity<List<InterViewDto>> getInterView(@RequestParam String languageId){
-        return ResponseEntity.ok(interViewService.getInterView(languageId));
+    public ResponseEntity<List<InterViewDto>> getInterView(@RequestParam String languageId) {
+        List<InterViewDto> interViewList = interViewService.getInterView(languageId);
+        return ResponseEntity.ok(interViewList); // 성공 시 200 OK와 데이터 반환
+
     }
     @GetMapping("/comment/{interViewId}")
-    public ResponseEntity<List<CommentDto>> getComment(@PathVariable long interViewId){
-        return ResponseEntity.ok(commentService.getComment(interViewId));
+    public ResponseEntity<List<CommentDto>> getComment(@PathVariable long interViewId) {
+        List<CommentDto> commentList = commentService.getComment(interViewId);
+        return ResponseEntity.ok(commentList); // 성공 시 200 OK와 데이터 반환
+
     }
 
 }

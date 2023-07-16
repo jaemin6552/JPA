@@ -5,8 +5,10 @@ import home.JPA.dto.JoinDto;
 import home.JPA.dto.LoginDto;
 import home.JPA.dto.TokenDto;
 import home.JPA.entity.Member;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberService {
 
@@ -16,7 +18,7 @@ public interface MemberService {
 
     void deleteById(String memberId);
 
-    boolean updateByNickName(String Email,String nickName);
+    ResponseEntity<String> updateByNickName(String Email, String nickName);
 
     public LoginDto signup(JoinDto requestDto);
     public TokenDto login(LoginDto requestDto);

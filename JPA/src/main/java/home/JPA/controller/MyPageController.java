@@ -35,8 +35,7 @@ public class MyPageController {
     @GetMapping("/nick-name/{nickName}")
     public ResponseEntity<String> signup(@PathVariable String nickName, @AuthenticationPrincipal UserDetails userDetails) {
             String email = userDetails.getUsername();
-            memberService.updateByNickName(email,nickName);
-        return ResponseEntity.ok("이름 변경 완료");
+        return  memberService.updateByNickName(email,nickName);
     }
     @PostMapping("/score-answer")
     public ResponseEntity<String> updateCorrectQuestionWithScore(@RequestBody ScoreQuestionDto scoreQuestionDto

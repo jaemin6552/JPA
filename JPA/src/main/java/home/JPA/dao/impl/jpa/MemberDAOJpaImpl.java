@@ -17,7 +17,6 @@ public class MemberDAOJpaImpl implements MemberDAO {
 
     @Override
     public Member saveMember(Member member) {
-
         return memberRepository.save(member);
     }
 

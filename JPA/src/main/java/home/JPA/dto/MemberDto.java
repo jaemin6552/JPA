@@ -5,8 +5,11 @@ import home.JPA.entity.Member;
 import home.JPA.entity.UnivEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -33,6 +36,8 @@ public class MemberDto implements Serializable {
     @NotNull
     private String gradeId;
 
+    private String authority;
+
     @NotNull
     private int score;
 
@@ -47,5 +52,6 @@ public class MemberDto implements Serializable {
                 .score(score)
                 .build();
     }
+
 
 }

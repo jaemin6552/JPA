@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,18 +26,9 @@ public class MemberController {
     private final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
     private final MemberService memberService;
 
-    private final MemberRankService memberRankService;
-
-//    @Cacheable(value = "memberId", key = "#memberId")
     @GetMapping(value = "/member/{memberId}")
     public MemberDto getMember(@PathVariable String memberId) {
-
-        long startTime = System.currentTimeMillis();
-        LOGGER.info("[getProduct] perform {} of Around Hub API.", "getProduct");
-
         MemberDto memberDto = memberService.getMember(memberId);
-
-
         return memberDto;
     }
 

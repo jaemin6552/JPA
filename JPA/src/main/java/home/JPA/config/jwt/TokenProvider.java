@@ -1,8 +1,9 @@
 package home.JPA.config.jwt;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import home.JPA.dto.TokenDto;
-import home.JPA.entity.RefreshToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Key;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,9 +35,10 @@ import java.util.stream.Collectors;
 public class TokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 1; //30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30분
 
-    public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //일주일
+
+    public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 30; //일주일
     private final Key key;
 
     private final RedisTemplate<String,Object> redisTemplate;
@@ -53,8 +56,7 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        log.info(authentication.getName());
-        log.info(authorities);
+
         long now = (new Date()).getTime();
 
 
@@ -65,35 +67,38 @@ public class TokenProvider {
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
-        String refreshToken;
-        RefreshToken redisRefresh = (RefreshToken) redisTemplate.opsForValue().get("refreshToken"+authentication.getName());
-        if(redisRefresh != null){
-               refreshToken = redisRefresh.getRefreshToken();
-        }else {
-                refreshToken = Jwts.builder()
+
+        String refreshToken = (String) redisTemplate.opsForValue().get("refreshToken::"+authentication.getName());
+
+        if(refreshToken == null) {
+            refreshToken = Jwts.builder()
                     .setSubject(authentication.getName())
                     .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                     .signWith(key, SignatureAlgorithm.HS512)
                     .compact();
-                redisTemplate.opsForValue().set("refreshToken"+authentication.getName(),refreshToken);
+            redisTemplate.opsForValue().set("refreshToken::" + authentication.getName(), refreshToken,REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         }
+
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
     }
-    public String generateAccessToken(String userEmail) {
+    public String generateAccessToken(String userEmail) throws JsonProcessingException {
         long now = (new Date()).getTime();
         Date tokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-        UserDetails user = (UserDetails) redisTemplate.opsForValue().get("user::"+userEmail);
+
+        String authorities = (String) redisTemplate.opsForValue().get("auth::"+userEmail);
+
         return Jwts.builder()
                 .setSubject(userEmail)
-                .claim(AUTHORITIES_KEY, Objects.requireNonNull(user).getAuthorities())
+                .claim(AUTHORITIES_KEY, "")//Objects.requireNonNull(user).getAuthorities())
                 .setExpiration(tokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
+
     public Authentication getAuthentication(String accessToken) {
         Claims claims = this.parseClaims(accessToken);
         System.out.println(claims);
@@ -131,7 +136,7 @@ public class TokenProvider {
         //1. Request Header 에서 JWT Token 추출
        Claims claims = parseClaims(refreshToken);
 
-            String redisRefreshToken = (String)redisTemplate.opsForValue().get("refreshToken"+claims.getSubject());
+            String redisRefreshToken = (String)redisTemplate.opsForValue().get("refreshToken::"+claims.getSubject());
 
             if (Objects.requireNonNull(redisRefreshToken).equals(refreshToken)) {
                 String accessToken = generateAccessToken(claims.getSubject());
