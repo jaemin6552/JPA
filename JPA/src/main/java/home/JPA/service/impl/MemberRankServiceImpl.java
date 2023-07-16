@@ -16,10 +16,6 @@ public class MemberRankServiceImpl implements MemberRankService {
     private final MemberRankRepository memberGradeRepository;
 
 
-    @Override
-    public void saveGrade(MemberRank memberRank) {
-
-    }
 
     @Override
     public int getGradeNum(long id) {
