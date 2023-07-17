@@ -31,11 +31,5 @@ public class InterViewController {
         List<CommentDto> commentList = commentService.getComment(interViewId);
         return ResponseEntity.ok(commentList); // 성공 시 200 OK와 데이터 반환
     }
-    @GetMapping("/is-like")
-    public ResponseEntity<String> saveIsLike(@AuthenticationPrincipal UserDetails userDetails,
-                                             @RequestParam long commentId,
-                                             @RequestParam boolean isLike){
-        commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentId,isLike);
-        return ResponseEntity.ok("좋아요 저장완료");
-    }
+
 }

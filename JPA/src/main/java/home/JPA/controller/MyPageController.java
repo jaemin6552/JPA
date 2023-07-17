@@ -56,4 +56,11 @@ public class MyPageController {
                             commentDto.getInterViewId(), commentDto.getDetail());
         return ResponseEntity.ok(true);
     }
+    @GetMapping("/is-like")
+    public ResponseEntity<String> saveIsLike(@AuthenticationPrincipal UserDetails userDetails,
+                                             @RequestParam long commentId,
+                                             @RequestParam boolean isLike){
+        commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentId,isLike);
+        return ResponseEntity.ok("좋아요 저장완료");
+    }
 }

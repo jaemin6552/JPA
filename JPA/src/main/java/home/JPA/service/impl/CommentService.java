@@ -49,6 +49,6 @@ public class CommentService {
         Optional<Feelings> feelingsOptional = feelingsRepository.findByMemberAndCommentEntity(member,commentEntity);
         Feelings feelings = feelingsOptional.orElseGet(()->new Feelings(commentEntity,member,isLike));
         if(!isLike && feelingsOptional.isPresent()) feelingsRepository.delete(feelings);
-        else feelingsRepository.save(feelings);
+        else if(isLike) feelingsRepository.save(feelings);
     }
 }
