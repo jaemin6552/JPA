@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,11 +27,8 @@ public class InterViewService {
         Pageable pageable = PageRequest.of(0,20);
         List<InterViewEntity> interViewEntityList = interViewRepository.findByLanguageName(language,pageable)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "면접준비 문제가 존재하지 않습니다."));
-        List<InterViewDto> interViewDtoList = new ArrayList<>();
-        for(InterViewEntity iv : interViewEntityList){
-            interViewDtoList.add(iv.toDto());
-        }
-        return interViewDtoList;
+
+        return interViewEntityList.stream().map(InterViewEntity::toDto).collect(Collectors.toList());
     }
 
 }

@@ -28,6 +28,7 @@ public class UnivRating extends BaseEntity {
         return UnivRatingDto.builder()
                 .univName(univEntity.getName())
                 .rankName(rank)
+                .score(score)
                 .build();
     }
 }

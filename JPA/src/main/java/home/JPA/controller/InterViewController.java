@@ -7,6 +7,8 @@ import home.JPA.service.impl.InterViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,12 @@ public class InterViewController {
     public ResponseEntity<List<CommentDto>> getComment(@PathVariable long interViewId) {
         List<CommentDto> commentList = commentService.getComment(interViewId);
         return ResponseEntity.ok(commentList); // 성공 시 200 OK와 데이터 반환
-
     }
-
+    @GetMapping("/is-like")
+    public ResponseEntity<String> saveIsLike(@AuthenticationPrincipal UserDetails userDetails,
+                                             @RequestParam long commentId,
+                                             @RequestParam boolean isLike){
+        commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentId,isLike);
+        return ResponseEntity.ok("좋아요 저장완료");
+    }
 }

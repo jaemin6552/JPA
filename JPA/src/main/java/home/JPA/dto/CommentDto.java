@@ -16,4 +16,6 @@ public class CommentDto {
     private String nickName;
 
     private long interViewId;
+
+    private int likeNum;
 }

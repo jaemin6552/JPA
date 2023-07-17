@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -48,14 +49,6 @@ public class UnivService {
         List<UnivRating> univRatingList = univRatingRepository.findRankingsByDate(
                 today,today.plusDays(1));
         if(univRatingList.size() == 0) return null;
-
-        List<UnivRatingDto> univRatingDtos = new ArrayList<>();
-        for(UnivRating uR : univRatingList){
-            UnivRatingDto univRatingDto = uR.toDto();
-            univRatingDto.setScore(uR.getScore());
-            univRatingDtos.add(univRatingDto);
-        }
-        Collections.sort(univRatingDtos);
-        return univRatingDtos;
+        return univRatingList.stream().map(UnivRating::toDto).sorted().collect(Collectors.toList());
     }
 }

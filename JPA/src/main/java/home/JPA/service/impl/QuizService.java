@@ -28,11 +28,7 @@ public class QuizService {
     public List<QuizDto> getAllQuizzes(String language){
         Pageable pageable = PageRequest.of(0, 20);
         List<QuizEntity> quizEntityList = quizRepository.findByLanguageName(language,pageable);
-        List<QuizDto> quizDtoList = new ArrayList<>();
-        for(QuizEntity q : quizEntityList){
-            quizDtoList.add(q.toDto());
-        }
-        return quizDtoList;
+        return quizEntityList.stream().map(QuizEntity::toDto).collect(Collectors.toList());
     }
     public void updateQuizMember(String email,List<Long> quizId){
         List<MemberQuizEntity> memberQuizEntities = new ArrayList<>();

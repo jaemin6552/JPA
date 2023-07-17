@@ -17,7 +17,6 @@ public class JwtController {
 
     @PostMapping("")
     public ResponseEntity<?> reissueAccessToken(@RequestHeader("Authorization") String header) throws IOException {
-        System.out.println("컨트롤러에 값들어옴");
         return tokenProvider.reissue(header.substring(7));
     }
 

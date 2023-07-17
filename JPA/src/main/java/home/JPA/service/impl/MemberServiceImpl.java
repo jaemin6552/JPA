@@ -73,7 +73,6 @@ public class MemberServiceImpl implements MemberService {
     public TokenDto login(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
         Authentication authentication = managerBuilder.getObject().authenticate(authenticationToken);
-        System.out.println(authentication);
         return tokenProvider.generateTokenDto(authentication);
     }
     @Override
@@ -93,10 +92,8 @@ public class MemberServiceImpl implements MemberService {
         member.setScore(member.getScore()+score);
         UnivEntity univEntity = univEntityRepository.findByName(member.getUnivEntity().getName());
         List<Member> univMemberList = univEntity.getMemberList();
-        int totalScore = 0;
-        for(Member m : univMemberList){
-            totalScore = m.getScore();
-        }
+        int totalScore = univMemberList.stream().map(Member::getScore).reduce(0,Integer::sum);
+
         if(totalScore > univEntity.getUnivRank().getScore()){
             UnivRank newUnivRank = univRankRepository.findById(univEntity.getUnivRank().getId()+1).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"이미 최대 티어입니다."));
             univEntity.setUnivRank(newUnivRank);

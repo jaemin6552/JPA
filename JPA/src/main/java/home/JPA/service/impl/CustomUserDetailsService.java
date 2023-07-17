@@ -26,9 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username + " 을 DB에서 찾을 수 없습니다"));
         UserDetails userDetails = createUserDetails(member);
-
         redisTemplate.opsForValue().set("user::" + username, userDetails);
-        System.out.println(userDetails.getAuthorities().toString());
         redisTemplate.opsForValue().set("auth::"+username,userDetails.getAuthorities().toString());
         return userDetails;
     }

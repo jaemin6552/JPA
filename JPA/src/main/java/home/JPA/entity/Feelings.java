@@ -25,6 +25,11 @@ public class Feelings extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private CommentEntity commentEntity;
-
+    public Feelings(){}
+    public Feelings(CommentEntity commentEntity,Member member,boolean isLike){
+        this.commentEntity = commentEntity;
+        this.member = member;
+        this.isLike = isLike;
+    }
 
 }
