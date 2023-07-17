@@ -21,12 +21,10 @@ public class RatingController {
     private final MemberService memberService;
     @GetMapping("/univ")
     public ResponseEntity<List<UnivRatingDto>> getUnivRatingList(){
-        univService.updateUnivRating();
         return ResponseEntity.ok(univService.getUnivRating());
     }
     @GetMapping("/member")
     public ResponseEntity<List<MemberRatingDto>> getMemberRatingList(){
-        memberService.updateRating();
         return ResponseEntity.ok(memberService.getMemberRating());
     }
 }
