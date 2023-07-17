@@ -30,7 +30,6 @@ public class MemberDto implements Serializable {
     @Id
     private String MemberEmail;
 
-    @NotNull
     private String MemberPwd;
 
     @NotNull

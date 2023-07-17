@@ -52,23 +52,14 @@ public class Member extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    public MemberDto toDto(MemberRank grade){
-        String gradeId = grade.getGrade();
+    public MemberDto toDto(){
         return MemberDto.builder()
                 .MemberRealName(realName)
-                .MemberPwd(pwd)
                 .MemberEmail(email)
                 .MemberNickName(nickName)
                 .phone(phoneNumber)
-                .gradeId(gradeId)
-                .build();
-    }
-    public MemberDto toDto(){
-        return MemberDto.builder()
-                .MemberPwd(pwd)
-                .MemberEmail(email)
+                .gradeId(memberRank.getGrade())
                 .authority(authority.name())
                 .build();
     }
-
 }

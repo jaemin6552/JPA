@@ -128,7 +128,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto getMember(String memberEmail) {
         Member member = memberDataHandler.getMember(memberEmail);
-        return member.toDto(member.getMemberRank());
+        return member.toDto();
     }
 
     @Override

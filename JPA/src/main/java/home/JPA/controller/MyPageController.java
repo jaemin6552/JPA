@@ -1,9 +1,6 @@
 package home.JPA.controller;
 
-import home.JPA.dto.CommentDto;
-import home.JPA.dto.JoinDto;
-import home.JPA.dto.LoginDto;
-import home.JPA.dto.ScoreQuestionDto;
+import home.JPA.dto.*;
 import home.JPA.entity.Member;
 import home.JPA.service.MemberService;
 import home.JPA.service.impl.CommentService;
@@ -31,6 +28,13 @@ public class MyPageController {
     private final MemberService memberService;
     private final QuizService quizService;
     private final CommentService commentService;
+
+    @GetMapping(value = "/my-info")
+    public MemberDto getMyInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        MemberDto memberDto = memberService.getMember(email);
+        return memberDto;
+    }
 
     @GetMapping("/nick-name/{nickName}")
     public ResponseEntity<String> signup(@PathVariable String nickName, @AuthenticationPrincipal UserDetails userDetails) {
