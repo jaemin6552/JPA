@@ -55,7 +55,7 @@ public class QuizService {
                 .collect(Collectors.toList());
 
         List<QuizEntity> unansweredQuizzes;
-        Pageable pageable = PageRequest.of(0, 2);
+        Pageable pageable = PageRequest.of(0, 20);
 
         if (correctQuizzes.isEmpty()) {
             unansweredQuizzes = quizRepository.findRandomQuizByLanguageName(language,pageable);
