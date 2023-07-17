@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -48,6 +49,7 @@ public class QuizEntity extends BaseEntity {
                 .explanation(explanation)
                 .language_id(language.getName())
                 .id(id)
+                .exDtoList(exEntityList.stream().map(ExEntity::toDto).collect(Collectors.toList()))
                 .build();
     }
 }

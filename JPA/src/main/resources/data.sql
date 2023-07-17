@@ -358,130 +358,130 @@ INSERT INTO quiz_entity(id,answer,explanation,quiz,language_id) values(25,2,"답
 ------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------
-INSERT INTO ex_entity(id,example,quiz_id) values(1,"답일까?",1);
-INSERT INTO ex_entity(id,example,quiz_id) values(2,"답일까?",1);
-INSERT INTO ex_entity(id,example,quiz_id) values(3,"답일까?",1);
-INSERT INTO ex_entity(id,example,quiz_id) values(4,"답일까?",1);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(1,"답일까?",1,1);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(2,"답일까?",2,1);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(3,"답일까?",3,1);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(4,"답일까?",4,1);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(5,"답일까?",2);
-INSERT INTO ex_entity(id,example,quiz_id) values(6,"답일까?",2);
-INSERT INTO ex_entity(id,example,quiz_id) values(7,"답일까?",2);
-INSERT INTO ex_entity(id,example,quiz_id) values(8,"답일까?",2);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(5,"답일까?",1,2);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(6,"답일까?",2,2);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(7,"답일까?",3,2);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(8,"답일까?",4,2);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(9,"답일까?",3);
-INSERT INTO ex_entity(id,example,quiz_id) values(10,"답일까?",3);
-INSERT INTO ex_entity(id,example,quiz_id) values(11,"답일까?",3);
-INSERT INTO ex_entity(id,example,quiz_id) values(12,"답일까?",3);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(9,"답일까?",1,3);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(10,"답일까?",2,3);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(11,"답일까?",3,3);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(12,"답일까?",4,3);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(13,"답일까?",4);
-INSERT INTO ex_entity(id,example,quiz_id) values(14,"답일까?",4);
-INSERT INTO ex_entity(id,example,quiz_id) values(15,"답일까?",4);
-INSERT INTO ex_entity(id,example,quiz_id) values(16,"답일까?",4);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(13,"답일까?",1,4);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(14,"답일까?",2,4);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(15,"답일까?",3,4);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(16,"답일까?",4,4);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(17,"답일까?",5);
-INSERT INTO ex_entity(id,example,quiz_id) values(18,"답일까?",5);
-INSERT INTO ex_entity(id,example,quiz_id) values(19,"답일까?",5);
-INSERT INTO ex_entity(id,example,quiz_id) values(20,"답일까?",5);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(17,"답일까?",1,5);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(18,"답일까?",2,5);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(19,"답일까?",3,5);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(20,"답일까?",4,5);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(21,"답일까?",6);
-INSERT INTO ex_entity(id,example,quiz_id) values(22,"답일까?",6);
-INSERT INTO ex_entity(id,example,quiz_id) values(23,"답일까?",6);
-INSERT INTO ex_entity(id,example,quiz_id) values(24,"답일까?",6);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(21,"답일까?",1,6);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(22,"답일까?",2,6);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(23,"답일까?",3,6);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(24,"답일까?",4,6);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(25,"답일까?",7);
-INSERT INTO ex_entity(id,example,quiz_id) values(26,"답일까?",7);
-INSERT INTO ex_entity(id,example,quiz_id) values(27,"답일까?",7);
-INSERT INTO ex_entity(id,example,quiz_id) values(28,"답일까?",7);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(25,"답일까?",1,7);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(26,"답일까?",2,7);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(27,"답일까?",3,7);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(28,"답일까?",4,7);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(29,"답일까?",8);
-INSERT INTO ex_entity(id,example,quiz_id) values(30,"답일까?",8);
-INSERT INTO ex_entity(id,example,quiz_id) values(31,"답일까?",8);
-INSERT INTO ex_entity(id,example,quiz_id) values(32,"답일까?",8);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(29,"답일까?",1,8);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(30,"답일까?",2,8);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(31,"답일까?",3,8);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(32,"답일까?",4,8);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(33,"답일까?",9);
-INSERT INTO ex_entity(id,example,quiz_id) values(34,"답일까?",9);
-INSERT INTO ex_entity(id,example,quiz_id) values(35,"답일까?",9);
-INSERT INTO ex_entity(id,example,quiz_id) values(36,"답일까?",9);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(33,"답일까?",1,9);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(34,"답일까?",2,9);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(35,"답일까?",3,9);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(36,"답일까?",4,9);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(37,"답일까?",10);
-INSERT INTO ex_entity(id,example,quiz_id) values(38,"답일까?",10);
-INSERT INTO ex_entity(id,example,quiz_id) values(39,"답일까?",10);
-INSERT INTO ex_entity(id,example,quiz_id) values(40,"답일까?",10);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(37,"답일까?",1,10);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(38,"답일까?",2,10);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(39,"답일까?",3,10);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(40,"답일까?",4,10);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(41,"답일까?",11);
-INSERT INTO ex_entity(id,example,quiz_id) values(42,"답일까?",11);
-INSERT INTO ex_entity(id,example,quiz_id) values(43,"답일까?",11);
-INSERT INTO ex_entity(id,example,quiz_id) values(44,"답일까?",11);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(41,"답일까?",1,11);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(42,"답일까?",2,11);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(43,"답일까?",3,11);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(44,"답일까?",4,11);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(45,"답일까?",12);
-INSERT INTO ex_entity(id,example,quiz_id) values(46,"답일까?",12);
-INSERT INTO ex_entity(id,example,quiz_id) values(47,"답일까?",12);
-INSERT INTO ex_entity(id,example,quiz_id) values(48,"답일까?",12);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(45,"답일까?",1,12);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(46,"답일까?",2,12);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(47,"답일까?",3,12);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(48,"답일까?",4,12);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(49,"답일까?",13);
-INSERT INTO ex_entity(id,example,quiz_id) values(50,"답일까?",13);
-INSERT INTO ex_entity(id,example,quiz_id) values(51,"답일까?",13);
-INSERT INTO ex_entity(id,example,quiz_id) values(52,"답일까?",13);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(49,"답일까?",1,13);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(50,"답일까?",2,13);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(51,"답일까?",3,13);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(52,"답일까?",4,13);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(53,"답일까?",14);
-INSERT INTO ex_entity(id,example,quiz_id) values(54,"답일까?",14);
-INSERT INTO ex_entity(id,example,quiz_id) values(55,"답일까?",14);
-INSERT INTO ex_entity(id,example,quiz_id) values(56,"답일까?",14);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(53,"답일까?",1,14);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(54,"답일까?",2,14);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(55,"답일까?",3,14);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(56,"답일까?",4,14);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(57,"답일까?",15);
-INSERT INTO ex_entity(id,example,quiz_id) values(58,"답일까?",15);
-INSERT INTO ex_entity(id,example,quiz_id) values(59,"답일까?",15);
-INSERT INTO ex_entity(id,example,quiz_id) values(60,"답일까?",15);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(57,"답일까?",1,15);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(58,"답일까?",2,15);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(59,"답일까?",3,15);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(60,"답일까?",4,15);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(61,"답일까?",16);
-INSERT INTO ex_entity(id,example,quiz_id) values(62,"답일까?",16);
-INSERT INTO ex_entity(id,example,quiz_id) values(63,"답일까?",16);
-INSERT INTO ex_entity(id,example,quiz_id) values(64,"답일까?",16);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(61,"답일까?",1,16);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(62,"답일까?",2,16);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(63,"답일까?",3,16);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(64,"답일까?",4,16);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(65,"답일까?",17);
-INSERT INTO ex_entity(id,example,quiz_id) values(66,"답일까?",17);
-INSERT INTO ex_entity(id,example,quiz_id) values(67,"답일까?",17);
-INSERT INTO ex_entity(id,example,quiz_id) values(68,"답일까?",17);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(65,"답일까?",1,17);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(66,"답일까?",2,17);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(67,"답일까?",3,17);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(68,"답일까?",4,17);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(69,"답일까?",18);
-INSERT INTO ex_entity(id,example,quiz_id) values(70,"답일까?",18);
-INSERT INTO ex_entity(id,example,quiz_id) values(71,"답일까?",18);
-INSERT INTO ex_entity(id,example,quiz_id) values(72,"답일까?",18);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(69,"답일까?",1,18);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(70,"답일까?",2,18);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(71,"답일까?",3,18);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(72,"답일까?",4,18);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(73,"답일까?",19);
-INSERT INTO ex_entity(id,example,quiz_id) values(74,"답일까?",19);
-INSERT INTO ex_entity(id,example,quiz_id) values(75,"답일까?",19);
-INSERT INTO ex_entity(id,example,quiz_id) values(76,"답일까?",19);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(73,"답일까?",1,19);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(74,"답일까?",2,19);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(75,"답일까?",3,19);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(76,"답일까?",4,19);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(77,"답일까?",20);
-INSERT INTO ex_entity(id,example,quiz_id) values(78,"답일까?",20);
-INSERT INTO ex_entity(id,example,quiz_id) values(79,"답일까?",20);
-INSERT INTO ex_entity(id,example,quiz_id) values(80,"답일까?",20);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(77,"답일까?",1,20);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(78,"답일까?",2,20);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(79,"답일까?",3,20);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(80,"답일까?",4,20);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(81,"답일까?",21);
-INSERT INTO ex_entity(id,example,quiz_id) values(82,"답일까?",21);
-INSERT INTO ex_entity(id,example,quiz_id) values(83,"답일까?",21);
-INSERT INTO ex_entity(id,example,quiz_id) values(84,"답일까?",21);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(81,"답일까?",1,21);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(82,"답일까?",2,21);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(83,"답일까?",3,21);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(84,"답일까?",4,21);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(85,"답일까?",22);
-INSERT INTO ex_entity(id,example,quiz_id) values(86,"답일까?",22);
-INSERT INTO ex_entity(id,example,quiz_id) values(87,"답일까?",22);
-INSERT INTO ex_entity(id,example,quiz_id) values(88,"답일까?",22);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(85,"답일까?",1,22);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(86,"답일까?",2,22);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(87,"답일까?",3,22);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(88,"답일까?",4,22);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(89,"답일까?",23);
-INSERT INTO ex_entity(id,example,quiz_id) values(90,"답일까?",23);
-INSERT INTO ex_entity(id,example,quiz_id) values(91,"답일까?",23);
-INSERT INTO ex_entity(id,example,quiz_id) values(92,"답일까?",23);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(89,"답일까?",1,23);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(90,"답일까?",2,23);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(91,"답일까?",3,23);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(92,"답일까?",4,23);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(93,"답일까?",24);
-INSERT INTO ex_entity(id,example,quiz_id) values(94,"답일까?",24);
-INSERT INTO ex_entity(id,example,quiz_id) values(95,"답일까?",24);
-INSERT INTO ex_entity(id,example,quiz_id) values(96,"답일까?",24);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(93,"답일까?",1,24);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(94,"답일까?",2,24);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(95,"답일까?",3,24);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(96,"답일까?",4,24);
 
-INSERT INTO ex_entity(id,example,quiz_id) values(97,"답일까?",25);
-INSERT INTO ex_entity(id,example,quiz_id) values(98,"답일까?",25);
-INSERT INTO ex_entity(id,example,quiz_id) values(99,"답일까?",25);
-INSERT INTO ex_entity(id,example,quiz_id) values(100,"답일까?",25);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(97,"답일까?",1,25);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(98,"답일까?",2,25);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(99,"답일까?",3,25);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(100,"답일까?",4,25);
 
 ------------------------------------------------------------------------------------------------------------
 

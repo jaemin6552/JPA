@@ -101,7 +101,7 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String accessToken) {
         Claims claims = this.parseClaims(accessToken);
-        System.out.println(claims);
+
         if (claims.get(AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
@@ -110,7 +110,7 @@ public class TokenProvider {
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-        System.out.println(authorities);
+
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);

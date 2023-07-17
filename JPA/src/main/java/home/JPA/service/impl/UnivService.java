@@ -11,8 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,7 +26,7 @@ public class UnivService {
 
     private UnivRatingRepository univRatingRepository;
 
-    @Scheduled(fixedRate = 12 * 60 * 1000) // 12시간마다 실행
+    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
     public void updateUnivRating() {
         // 멤버 등수 업데이트 작업 수행
         List<UnivRating> univRatingList = new ArrayList<>();
@@ -41,8 +44,9 @@ public class UnivService {
             univRatingRepository.saveAll(univRatingList);
     }
     public List<UnivRatingDto> getUnivRating(){
-
-        List<UnivRating> univRatingList = univRatingRepository.findAll();
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        List<UnivRating> univRatingList = univRatingRepository.findRankingsByDate(
+                today,today.plusDays(1));
         if(univRatingList.size() == 0) return null;
 
         List<UnivRatingDto> univRatingDtos = new ArrayList<>();

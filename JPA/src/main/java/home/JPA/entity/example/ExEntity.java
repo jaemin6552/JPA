@@ -1,5 +1,6 @@
 package home.JPA.entity.example;
 
+import home.JPA.dto.ExDto;
 import home.JPA.entity.BaseEntity;
 import home.JPA.entity.quiz.QuizEntity;
 import lombok.Getter;
@@ -19,8 +20,15 @@ public class ExEntity extends BaseEntity {
 
     private String example;
 
+    private byte choice;
+
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private QuizEntity quizEntity;
-
+    public ExDto toDto(){
+        return ExDto.builder()
+                .example(example)
+                .id(choice)
+                .build();
+    }
 }
