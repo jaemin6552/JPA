@@ -48,6 +48,12 @@ public class MyPageController {
         quizService.updateQuizMember(email,scoreQuestionDto.getQuestion());
         return ResponseEntity.ok("점수 반영 완료");
     }
+    @PostMapping("/change-password")
+    public ResponseEntity<String> updatePassWord(@AuthenticationPrincipal UserDetails userDetails,
+                                                 @RequestBody MemberDto memberDto){
+        memberService.updatePassword(userDetails.getUsername(),memberDto.getMemberPwd());
+        return ResponseEntity.ok("비밀번호 변경 완료");
+    }
     @PostMapping("")
     public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto
                                                 ,@AuthenticationPrincipal UserDetails userDetails){
