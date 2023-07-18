@@ -32,8 +32,7 @@ public class MyPageController {
     @GetMapping(value = "/my-info")
     public MemberDto getMyInfo(@AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-        MemberDto memberDto = memberService.getMember(email);
-        return memberDto;
+        return memberService.getMember(email);
     }
 
     @GetMapping("/nick-name/{nickName}")

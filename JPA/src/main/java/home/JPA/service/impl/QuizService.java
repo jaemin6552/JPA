@@ -31,17 +31,18 @@ public class QuizService {
         return quizEntityList.stream().map(QuizEntity::toDto).collect(Collectors.toList());
     }
     public void updateQuizMember(String email,List<Long> quizId){
-        List<MemberQuizEntity> memberQuizEntities = new ArrayList<>();
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("유저없음"));
+        List<MemberQuizEntity> memberQuizEntities = quizId.stream()
+                .map(aLong -> {
+                    MemberQuizEntity memberQuizEntity = new MemberQuizEntity();
+                    memberQuizEntity.setTry(true);
+                    memberQuizEntity.setRight(true);
+                    memberQuizEntity.setMember(member);
+                    memberQuizEntity.setQuizEntity(quizRepository.getReferenceById(aLong));
+                    return memberQuizEntity;
+                })
+                .collect(Collectors.toList());
 
-        for (Long aLong : quizId) {
-            MemberQuizEntity memberQuizEntity = new MemberQuizEntity();
-            memberQuizEntity.setTry(true);
-            memberQuizEntity.setRight(true);
-            memberQuizEntity.setMember(member);
-            memberQuizEntity.setQuizEntity(quizRepository.getReferenceById(aLong));
-            memberQuizEntities.add(memberQuizEntity);
-        }
         memberQuizRepository.saveAll(memberQuizEntities);
     }
     public List<QuizDto> getUnansweredQuizzes(String email,String language) {
@@ -58,10 +59,6 @@ public class QuizService {
         } else {
             unansweredQuizzes = quizRepository.findAllExceptQuizzesByLanguageId(correctQuizzes,language,pageable);
         }
-        List<QuizDto> quizDtoList = new ArrayList<>();
-        for(QuizEntity q : unansweredQuizzes){
-            quizDtoList.add(q.toDto());
-        }
-        return quizDtoList;
+        return unansweredQuizzes.stream().map(QuizEntity::toDto).collect(Collectors.toList());
     }
 }
