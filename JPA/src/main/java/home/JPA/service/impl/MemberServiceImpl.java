@@ -125,7 +125,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updatePassword(String email,String pwd) {
         Member member =memberRepository.findByEmail(email).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"유저를 찾을수없습니다."));
-        member.setPwd(pwd);
+        member.setPwd(passwordEncoder.encode(pwd));
         memberRepository.save(member);
     }
 

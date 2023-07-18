@@ -50,8 +50,9 @@ public class MyPageController {
     }
     @PostMapping("/change-password")
     public ResponseEntity<String> updatePassWord(@AuthenticationPrincipal UserDetails userDetails,
-                                                 @RequestBody MemberDto memberDto){
-        memberService.updatePassword(userDetails.getUsername(),memberDto.getMemberPwd());
+                                                 @RequestBody LoginDto loginDto){
+
+        memberService.updatePassword(userDetails.getUsername(),loginDto.getPwd());
         return ResponseEntity.ok("비밀번호 변경 완료");
     }
     @PostMapping("")
