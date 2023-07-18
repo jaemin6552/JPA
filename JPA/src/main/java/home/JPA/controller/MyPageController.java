@@ -36,7 +36,7 @@ public class MyPageController {
     }
 
     @GetMapping("/nick-name/{nickName}")
-    public ResponseEntity<String> signup(@PathVariable String nickName, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<String> updateNickName(@PathVariable String nickName, @AuthenticationPrincipal UserDetails userDetails) {
             String email = userDetails.getUsername();
         return  memberService.updateByNickName(email,nickName);
     }

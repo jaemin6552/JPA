@@ -50,7 +50,7 @@ public class MemberController {
     }
 //    @CacheEvict(value = "memberId", key = "#memberId")
     @DeleteMapping(value = "/memberId-del/{memberId}")
-    public void deleteProduct(@PathVariable String memberId) {
+    public void deleteMember(@PathVariable String memberId) {
         memberService.deleteById(memberId);
     }
 
