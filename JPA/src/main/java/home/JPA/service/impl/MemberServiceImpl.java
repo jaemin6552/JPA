@@ -136,6 +136,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void updatePhone(String email,String phone) {
+        Member member =memberRepository.findByEmail(email).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"유저를 찾을수없습니다."));
+        member.setPhoneNumber(phone);
+        memberRepository.save(member);
+    }
+
+    @Override
     public void deleteById(String id) {
         memberDataHandler.deleteById(id);
     }

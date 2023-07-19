@@ -54,9 +54,9 @@ public class Member extends BaseEntity{
 
     public MemberDto toDto(){
         return MemberDto.builder()
-                .MemberRealName(realName)
-                .MemberEmail(email)
-                .MemberNickName(nickName)
+                .memberRealName(realName)
+                .memberEmail(email)
+                .memberNickName(nickName)
                 .phone(phoneNumber)
                 .gradeId(memberRank.getGrade())
                 .authority(authority.name())

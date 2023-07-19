@@ -13,6 +13,8 @@ public interface MemberService {
     public void updatePassword(String email,String pwd);
     public MemberDto getMember(String memberId);
 
+    public void updatePhone(String email,String phone);
+
     public void updateRating();
 
     public void deleteById(String memberId);

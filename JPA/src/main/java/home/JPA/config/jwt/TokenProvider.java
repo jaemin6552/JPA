@@ -38,7 +38,7 @@ public class TokenProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30분
 
 
-    public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 30; //일주일
+    public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7; //일주일
     private final Key key;
 
     private final RedisTemplate<String,Object> redisTemplate;

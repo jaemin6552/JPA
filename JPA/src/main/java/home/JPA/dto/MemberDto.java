@@ -2,14 +2,10 @@ package home.JPA.dto;
 
 import com.sun.istack.NotNull;
 import home.JPA.entity.Member;
-import home.JPA.entity.UnivEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -19,18 +15,18 @@ import java.util.Collection;
 public class MemberDto implements Serializable {
 
     @NotNull
-    private String MemberRealName;
+    private String memberRealName;
 
     @NotNull
-    private String MemberNickName;
+    private String memberNickName;
 
     @NotNull
     private String phone;
 
     @Id
-    private String MemberEmail;
-    @NotNull
-    private String MemberPwd;
+    private String memberEmail;
+
+    private String memberPwd;
 
     @NotNull
     private String gradeId;
@@ -43,10 +39,10 @@ public class MemberDto implements Serializable {
 
     public Member toEntity(){
         return Member.builder()
-                .realName(MemberRealName)
-                .pwd(MemberPwd)
-                .email(MemberEmail)
-                .nickName(MemberNickName)
+                .realName(memberRealName)
+                .pwd(memberPwd)
+                .email(memberEmail)
+                .nickName(memberNickName)
                 .phoneNumber(phone)
                 .score(score)
                 .build();

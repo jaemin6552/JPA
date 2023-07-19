@@ -50,10 +50,16 @@ public class MyPageController {
     }
     @PostMapping("/change-password")
     public ResponseEntity<String> updatePassWord(@AuthenticationPrincipal UserDetails userDetails,
-                                                 @RequestBody LoginDto loginDto){
-
-        memberService.updatePassword(userDetails.getUsername(),loginDto.getPwd());
+                                                 @RequestBody MemberDto memberDto){
+        System.out.println(memberDto.getMemberPwd());
+        memberService.updatePassword(userDetails.getUsername() ,memberDto.getMemberPwd());
         return ResponseEntity.ok("비밀번호 변경 완료");
+    }
+    @PostMapping("/change-phone")
+    public ResponseEntity<String> updatePhone(@AuthenticationPrincipal UserDetails userDetails,
+                                              @RequestBody MemberDto memberDto){
+        memberService.updatePhone(userDetails.getUsername(),memberDto.getPhone());
+        return ResponseEntity.ok("핸드폰 번호 변경 완료");
     }
     @PostMapping("")
     public ResponseEntity<Boolean> InsertComment(@RequestBody CommentDto commentDto
