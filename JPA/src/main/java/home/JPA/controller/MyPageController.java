@@ -75,4 +75,9 @@ public class MyPageController {
         commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentId,isLike);
         return ResponseEntity.ok("좋아요 저장완료");
     }
+    @GetMapping("/delete-comment")
+    public ResponseEntity<String> deleteComment(@AuthenticationPrincipal UserDetails userDetails,
+                                                @RequestParam long commentId){
+        return commentService.deleteComment(userDetails.getUsername(),commentId);
+    }
 }

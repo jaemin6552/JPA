@@ -34,7 +34,7 @@ public class UnivService {
         List<UnivRating> univRatingList = new ArrayList<>();
         List<UnivEntity> univEntities = univEntityRepository.findAll();
         List<UnivRating> prvUnivRatingList = univRatingRepository.findRankingsByDate(
-                today, today.plusDays(1));
+                today.minusDays(1), today);
 
         for (UnivEntity u : univEntities) {
             List<Member> memberList = u.getMemberList();
@@ -68,21 +68,7 @@ public class UnivService {
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         List<UnivRating> univRatingList = univRatingRepository.findRankingsByDate(
                 today, today.plusDays(1));
-        return null;
-//        return univRatingList.stream()
-//                .map(UnivRating::toDto)
-//                .sorted()
-//                .peek(univRatingDto -> {
-//                    UnivRatingDto prevDto = prvUnivRatingListDto.stream()
-//                            .filter(prev -> prev.equals(univRatingDto))
-//                            .findFirst()
-//                            .orElse(null);
-//                    if (prevDto != null) {
-//                        univRatingDto.setPrevRating(prevDto.getNowRating());
-//                    } else {
-//                        univRatingDto.setPrevRating(-1);
-//                    }
-//                })
-//                .collect(Collectors.toList());
+        return univRatingList.stream().map(UnivRating::toDto).collect(Collectors.toList());
+
         }
 }
