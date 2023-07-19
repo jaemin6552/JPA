@@ -51,13 +51,9 @@ insert into univ_entity (id,created_at,updated_at,name,rank_id) values(32,CURREN
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(33,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"동아대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(34,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"동의대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(35,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"부경대학교",1);
-insert into univ_entity (id,created_at,updated_at,name,rank_id) values(36,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"부산대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(37,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"부산외국어대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(38,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"신라대학교",1);
-insert into univ_entity (id,created_at,updated_at,name,rank_id) values(39,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"영산대학교",1);
-insert into univ_entity (id,created_at,updated_at,name,rank_id) values(40,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"인제대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(41,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"한국해양대학교",1);
-insert into univ_entity (id,created_at,updated_at,name,rank_id) values(42,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"경북대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(43,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"계명대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(44,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"대구가톨릭대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(45,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"대구대학교",1);
