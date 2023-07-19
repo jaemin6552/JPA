@@ -21,6 +21,7 @@ public class RatingController {
     private final MemberService memberService;
     @GetMapping("/univ")
     public ResponseEntity<List<UnivRatingDto>> getUnivRatingList(){
+        univService.updateUnivRating();
         return ResponseEntity.ok(univService.getUnivRating());
     }
     @GetMapping("/member")

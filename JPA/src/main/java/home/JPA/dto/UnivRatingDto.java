@@ -1,8 +1,9 @@
 package home.JPA.dto;
 
+import home.JPA.entity.UnivRating;
 import lombok.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -13,7 +14,20 @@ public class UnivRatingDto implements Comparable<UnivRatingDto>{
     private String univName;
     private int score;
     private String rankName;
-    private int prevRank;
+    private int nowRating;
+    private int prevRating;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        UnivRatingDto other = (UnivRatingDto) obj;
+        return Objects.equals(this.univName, other.univName);
+    }
 
     @Override
     public int compareTo(UnivRatingDto o) {

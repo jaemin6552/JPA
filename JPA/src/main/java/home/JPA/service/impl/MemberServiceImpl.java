@@ -4,10 +4,7 @@ import home.JPA.config.jwt.TokenProvider;
 import home.JPA.dto.*;
 import home.JPA.entity.Member;
 import home.JPA.entity.MemberRating;
-import home.JPA.entity.RefreshToken;
 import home.JPA.entity.UnivEntity;
-import home.JPA.entity.memberQuiz.MemberQuizEntity;
-import home.JPA.entity.quiz.QuizEntity;
 import home.JPA.entity.rank.MemberRank;
 import home.JPA.entity.rank.UnivRank;
 import home.JPA.handler.MemberDataHandler;
@@ -29,11 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static home.JPA.config.jwt.TokenProvider.REFRESH_TOKEN_EXPIRE_TIME;
 
 @Service
 @AllArgsConstructor
@@ -116,7 +109,7 @@ public class MemberServiceImpl implements MemberService {
         for(int i = 0; i<memberList.size(); i++){
             MemberRating memberRating = new MemberRating();
             memberRating.setMember(memberList.get(i));
-            memberRating.setRank(i);
+            memberRating.setRating(i);
             memberRatingList.add(memberRating);
         }
         memberRatingRepository.saveAll(memberRatingList);

@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Slf4j
@@ -25,28 +27,62 @@ public class UnivService {
 
     private UnivRatingRepository univRatingRepository;
 
-    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
+    //    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
     public void updateUnivRating() {
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         // 멤버 등수 업데이트 작업 수행
         List<UnivRating> univRatingList = new ArrayList<>();
-        List<UnivEntity> univEntities =univEntityRepository.findAll();
-            for(UnivEntity u : univEntities){
-                List<Member> memberList = u.getMemberList();
-                UnivRating univRating = new UnivRating();
-                univRating.setUnivEntity(u);
-                univRating.setRank(u.getUnivRank().getGrade());
-                for(Member m : memberList){
-                    univRating.setScore(univRating.getScore()+m.getScore());
-                }
-                univRatingList.add(univRating);
+        List<UnivEntity> univEntities = univEntityRepository.findAll();
+        List<UnivRating> prvUnivRatingList = univRatingRepository.findRankingsByDate(
+                today, today.plusDays(1));
+
+        for (UnivEntity u : univEntities) {
+            List<Member> memberList = u.getMemberList();
+            UnivRating univRating = new UnivRating();
+            univRating.setUnivEntity(u);
+            univRating.setRank(u.getUnivRank().getGrade());
+            for (Member m : memberList) {
+                univRating.setScore(univRating.getScore() + m.getScore());
+            }
+            univRatingList.add(univRating);
         }
-            univRatingRepository.saveAll(univRatingList);
+        List<UnivRating> sortedList = univRatingList.stream()
+                .sorted()
+                .collect(Collectors.toList());
+        IntStream.range(0, sortedList.size())
+                .forEach(i -> {
+                    UnivRating univRating = sortedList.get(i);
+                    int prevRank = prvUnivRatingList.stream()
+                            .filter(prevUnivRating -> prevUnivRating.toDto().equals(univRating.toDto()))
+                            .map(UnivRating::getNowRating)
+                            .findFirst()
+                            .orElse(-1);
+                    univRating.setPrevRating(prevRank);
+                    univRating.setNowRating(i + 1);
+                });
+
+        univRatingRepository.saveAll(sortedList);
     }
-    public List<UnivRatingDto> getUnivRating(){
+
+    public List<UnivRatingDto> getUnivRating() {
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         List<UnivRating> univRatingList = univRatingRepository.findRankingsByDate(
-                today,today.plusDays(1));
-        if(univRatingList.size() == 0) return null;
-        return univRatingList.stream().map(UnivRating::toDto).sorted().collect(Collectors.toList());
-    }
+                today, today.plusDays(1));
+        return null;
+//        return univRatingList.stream()
+//                .map(UnivRating::toDto)
+//                .sorted()
+//                .peek(univRatingDto -> {
+//                    UnivRatingDto prevDto = prvUnivRatingListDto.stream()
+//                            .filter(prev -> prev.equals(univRatingDto))
+//                            .findFirst()
+//                            .orElse(null);
+//                    if (prevDto != null) {
+//                        univRatingDto.setPrevRating(prevDto.getNowRating());
+//                    } else {
+//                        univRatingDto.setPrevRating(-1);
+//                    }
+//                })
+//                .collect(Collectors.toList());
+        }
 }
