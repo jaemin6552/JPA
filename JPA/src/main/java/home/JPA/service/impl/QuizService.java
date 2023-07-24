@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,12 +33,17 @@ public class QuizService {
     }
     public void updateQuizMember(String email,List<Long> quizId){
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("유저없음"));
+        Optional<MemberQuizEntity> optionalMaxTryEntity = memberQuizRepository.findTopByOrderByTryCountDesc();
+
+        int tryCount = optionalMaxTryEntity.map(MemberQuizEntity::getTryCount).orElse(0)+1;
+
         List<MemberQuizEntity> memberQuizEntities = quizId.stream()
                 .map(aLong -> {
                     MemberQuizEntity memberQuizEntity = new MemberQuizEntity();
                     memberQuizEntity.setTry(true);
                     memberQuizEntity.setRight(true);
                     memberQuizEntity.setMember(member);
+                    memberQuizEntity.setTryCount(tryCount);
                     memberQuizEntity.setQuizEntity(quizRepository.getReferenceById(aLong));
                     return memberQuizEntity;
                 })

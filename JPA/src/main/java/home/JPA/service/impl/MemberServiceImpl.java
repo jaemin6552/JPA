@@ -106,7 +106,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
+    @Scheduled(cron = "0 0 0 * * ?") // 12시간마다 실행
     public void updateRating() {
         // 멤버 등수 업데이트 작업 수행
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
@@ -127,7 +127,7 @@ public class MemberServiceImpl implements MemberService {
                     .findFirst()
                     .orElse(-1);
             memberRating.setPrevRating(prevRating);
-            memberRating.setNowRating(i);
+            memberRating.setNowRating(i+1);
             memberRatingList.add(memberRating);
         }
         memberRatingRepository.saveAll(memberRatingList);

@@ -29,4 +29,6 @@ public class MemberQuizEntity extends BaseEntity {
 
     private boolean isRight;
 
+    private int tryCount;
+
 }

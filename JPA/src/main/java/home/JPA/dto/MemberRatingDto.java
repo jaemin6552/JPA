@@ -15,6 +15,8 @@ public class MemberRatingDto {
     private int score;
     private String rankName;
     private int prevRank;
+
+    private int nowRank;
     private long avg;
     private String univName;
 

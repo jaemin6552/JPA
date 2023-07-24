@@ -31,6 +31,9 @@ public class MemberRating extends BaseEntity{
                 .userName(member.getNickName())
                 .rankName(member.getMemberRank().getGrade())
                 .univName(member.getUnivEntity().getName())
+                .avg(member.getScore() / member.getMemberQuizEntityList().get(member.getMemberQuizEntityList().size()-1).getTryCount())
+                .prevRank(prevRating)
+                .nowRank(nowRating)
                 .build();
     }
 

@@ -27,11 +27,17 @@ public class RatingController {
     }
     @GetMapping("/member")
     public ResponseEntity<List<MemberRatingDto>> getMemberRatingList(){
+        memberService.updateRating();
         return ResponseEntity.ok(memberService.getMemberRating());
     }
     @GetMapping("/private-univ")
     public ResponseEntity<List<UnivRatingDto>>getPrivateUnivRatingList(@RequestParam String univName){
         univService.updateUnivRating();
         return ResponseEntity.ok(univService.getPrivateRating(univName));
+    }
+    @GetMapping("/private-member")
+    public ResponseEntity<List<MemberRatingDto>> getPrivateMemberRatingList(@RequestParam String nickName){
+        memberService.updateRating();
+        return ResponseEntity.ok(memberService.getPrivateMemberRating(nickName));
     }
 }

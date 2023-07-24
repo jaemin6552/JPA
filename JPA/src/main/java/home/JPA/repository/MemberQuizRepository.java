@@ -1,6 +1,7 @@
 package home.JPA.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import home.JPA.entity.Member;
 import home.JPA.entity.memberQuiz.MemberQuizEntity;
@@ -15,5 +16,6 @@ public interface MemberQuizRepository extends JpaRepository<MemberQuizEntity,Lon
     @Query("SELECT mq FROM MemberQuizEntity mq WHERE mq.member.email = ?1 AND mq.isRight = true")
     List<MemberQuizEntity> findCorrectQuizzesForMemberId(String email);
 
+    Optional<MemberQuizEntity> findTopByOrderByTryCountDesc();
 
 }

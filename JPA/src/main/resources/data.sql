@@ -301,7 +301,7 @@ insert into univ_entity (id,created_at,updated_at,name,rank_id) values(325,CURRE
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(327,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"숭의여자대학교",1);
 insert into univ_entity (id,created_at,updated_at,name,rank_id) values(328,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),"한양여자대학교",1);
 ------------------------------------------------------------------------------------------------------------
-INSERT INTO quiz_entity(id,answer,explanation,quiz,language_id) values(1,3,"답이니까 답임","JAVA퀴즈1입니다.",'JAVA');
+INSERT INTO quiz_entity(id,answer,explanation,quiz,language_id) values(1,3,"답이니까 답임","객체지향의 4대요소중 틀린것은.",'JAVA');
 INSERT INTO quiz_entity(id,answer,explanation,quiz,language_id) values(2,1,"답이니까 답임","JAVA퀴즈2입니다.",'JAVA');
 INSERT INTO quiz_entity(id,answer,explanation,quiz,language_id) values(3,4,"답이니까 답임","JAVA퀴즈3입니다.",'JAVA');
 INSERT INTO quiz_entity(id,answer,explanation,quiz,language_id) values(4,2,"답이니까 답임","JAVA퀴즈4입니다.",'JAVA');

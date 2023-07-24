@@ -53,9 +53,6 @@ public class MemberController {
         memberService.deleteById(memberId);
     }
 
-    @GetMapping("/member-all")
-    public List<MemberDto> getAll() {
-        return memberService.getAll();
-    }
+
 
 }
