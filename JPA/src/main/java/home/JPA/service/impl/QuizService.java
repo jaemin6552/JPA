@@ -25,8 +25,8 @@ public class QuizService {
     private MemberQuizRepository memberQuizRepository;
     private MemberRepository memberRepository;
 
-    public List<QuizDto> getAllQuizzes(String language){
-        Pageable pageable = PageRequest.of(0, 20);
+    public List<QuizDto> getAllQuizzes(int page,String language){
+        Pageable pageable = PageRequest.of(page, 5);
         List<QuizEntity> quizEntityList = quizRepository.findByLanguageName(language,pageable);
         return quizEntityList.stream().map(QuizEntity::toDto).collect(Collectors.toList());
     }

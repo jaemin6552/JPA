@@ -41,6 +41,10 @@ public class CommentService {
         comment.setDetail(commentDetail);
         commentRepository.save(comment);
     }
+    public ResponseEntity<String> changeComment(String email, Long commentId){
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"지우실 댓글이 없습니다."));
+
+    }
     public ResponseEntity<String> deleteComment(String email, Long commentId){
         CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"지우실 댓글이 없습니다."));
         if(commentEntity.getMember().getEmail().equals(email)) {

@@ -19,8 +19,9 @@ import java.util.List;
 public class StudyController {
     private final QuizService quizService;
     @GetMapping("")
-    public ResponseEntity<List<QuizDto>> getStudy(@RequestParam String language) {
+    public ResponseEntity<List<QuizDto>> getStudy(@RequestParam int page,
+                                                  @RequestParam String language) {
 
-        return ResponseEntity.ok(quizService.getAllQuizzes(language));
+        return ResponseEntity.ok(quizService.getAllQuizzes(page,language));
     }
 }

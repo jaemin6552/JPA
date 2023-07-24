@@ -55,7 +55,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public LoginDto signup(JoinDto requestDto) {
         if (memberRepository.existsByEmail(requestDto.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"이미 가입된 유저 입니다.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"중복된 아이디 입니다.");
+        }
+        if(memberRepository.existsByNickName(requestDto.getNickName())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"중복된 닉네임 입니다..");
         }
         Member member = requestDto.toMember(passwordEncoder);
         member.setMemberRank(memberRankRepository.getReferenceById(1L));
