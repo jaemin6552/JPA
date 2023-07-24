@@ -15,4 +15,7 @@ public class InterViewDto {
     private String title;
     private String language_id;
 
+    private int likeCnt;
+    private Boolean isLike;
+
 }

@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "feelings")
-public class Feelings extends BaseEntity{
+@Table(name = "comment_likes")
+public class CommentLikes extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -25,8 +25,9 @@ public class Feelings extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private CommentEntity commentEntity;
-    public Feelings(){}
-    public Feelings(CommentEntity commentEntity,Member member,boolean isLike){
+
+    public CommentLikes(){}
+    public CommentLikes(CommentEntity commentEntity, Member member, boolean isLike){
         this.commentEntity = commentEntity;
         this.member = member;
         this.isLike = isLike;

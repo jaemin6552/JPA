@@ -2,18 +2,20 @@ package home.JPA.service.impl;
 
 import home.JPA.dto.QuizDto;
 import home.JPA.entity.Member;
+import home.JPA.entity.QuizLikes;
 import home.JPA.entity.memberQuiz.MemberQuizEntity;
 import home.JPA.entity.quiz.QuizEntity;
 import home.JPA.repository.MemberQuizRepository;
 import home.JPA.repository.MemberRepository;
+import home.JPA.repository.QuizLikesRepository;
 import home.JPA.repository.QuizRepository;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,6 +27,7 @@ public class QuizService {
     private QuizRepository quizRepository;
     private MemberQuizRepository memberQuizRepository;
     private MemberRepository memberRepository;
+    private QuizLikesRepository quizLikesRepository;
 
     public List<QuizDto> getAllQuizzes(int page,String language){
         Pageable pageable = PageRequest.of(page, 5);
@@ -66,5 +69,13 @@ public class QuizService {
             unansweredQuizzes = quizRepository.findAllExceptQuizzesByLanguageId(correctQuizzes,language,pageable);
         }
         return unansweredQuizzes.stream().map(QuizEntity::toDto).collect(Collectors.toList());
+    }
+    public void saveQuizLikeByEmailAndQuizId(String eMail, Long quizId, boolean isLike){
+        Member member = memberRepository.findByEmail(eMail).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"멤버를 찾을수 없습니다."));
+        QuizEntity quizEntity = quizRepository.findById(quizId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"퀴즈가 없습니다."));
+        Optional<QuizLikes> quizLikeOptional = quizLikesRepository.findByMemberAndQuizEntity(member,quizEntity);
+        QuizLikes quizLikes = quizLikeOptional.orElseGet(()->new QuizLikes(quizEntity,member,isLike));
+        if(!isLike && quizLikeOptional.isPresent()) quizLikesRepository.delete(quizLikes);
+        else if(isLike) quizLikesRepository.save(quizLikes);
     }
 }

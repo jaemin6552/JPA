@@ -2,10 +2,9 @@ package home.JPA.entity.comment;
 
 import home.JPA.dto.CommentDto;
 import home.JPA.entity.BaseEntity;
-import home.JPA.entity.Feelings;
+import home.JPA.entity.CommentLikes;
 import home.JPA.entity.Member;
 import home.JPA.entity.interview.InterViewEntity;
-import home.JPA.entity.quiz.QuizEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,14 +29,14 @@ public class CommentEntity extends BaseEntity {
     @JoinColumn(name = "inter_view_id")
     private InterViewEntity interViewEntity;
     @OneToMany(mappedBy = "commentEntity")
-    private List<Feelings> feelingsList;
+    private List<CommentLikes> commentLikesList;
 
     public CommentDto toDto(){
         return CommentDto.builder()
                 .detail(detail)
                 .nickName(member.getNickName())
                 .interViewId(interViewEntity.getId())
-                .likeNum(feelingsList.size())
+                .likeCnt(commentLikesList.size())
                 .id(id)
                 .build();
     }

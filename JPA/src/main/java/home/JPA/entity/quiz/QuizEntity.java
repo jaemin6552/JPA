@@ -5,6 +5,7 @@ package home.JPA.entity.quiz;
 import home.JPA.dto.QuizDto;
 import home.JPA.entity.BaseEntity;
 import home.JPA.entity.Language;
+import home.JPA.entity.QuizLikes;
 import home.JPA.entity.example.ExEntity;
 import home.JPA.entity.memberQuiz.MemberQuizEntity;
 import lombok.Getter;
@@ -42,12 +43,16 @@ public class QuizEntity extends BaseEntity {
     @OneToMany(mappedBy = "quizEntity")
     private List<ExEntity> exEntityList;
 
+    @OneToMany(mappedBy = "quizEntity")
+    private List<QuizLikes> quizLikesList;
+
     public QuizDto toDto(){
         return QuizDto.builder()
                 .title(quiz)
                 .answer(answer)
                 .explanation(explanation)
                 .language_id(language.getName())
+                .likeCnt(quizLikesList.size())
                 .id(id)
                 .exDtoList(exEntityList.stream().map(ExEntity::toDto).collect(Collectors.toList()))
                 .build();

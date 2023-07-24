@@ -1,24 +1,16 @@
 package home.JPA.controller;
 
 import home.JPA.dto.*;
-import home.JPA.entity.Member;
 import home.JPA.service.MemberService;
 import home.JPA.service.impl.CommentService;
+import home.JPA.service.impl.InterViewService;
 import home.JPA.service.impl.QuizService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Security;
 
 @RestController
 @RequestMapping("/my-page")
@@ -28,6 +20,7 @@ public class MyPageController {
     private final MemberService memberService;
     private final QuizService quizService;
     private final CommentService commentService;
+    private final InterViewService interViewService;
 
     @GetMapping(value = "/my-info")
     public MemberDto getMyInfo(@AuthenticationPrincipal UserDetails userDetails) {
@@ -68,11 +61,23 @@ public class MyPageController {
                             commentDto.getInterViewId(), commentDto.getDetail());
         return ResponseEntity.ok(true);
     }
-    @PostMapping("/is-like")
-    public ResponseEntity<String> saveIsLike(@AuthenticationPrincipal UserDetails userDetails,
+    @PostMapping("/comment/is-like")
+    public ResponseEntity<String> saveCommentIsLike(@AuthenticationPrincipal UserDetails userDetails,
                                              @RequestBody CommentDto commentDto){
-        commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentDto.getId(),commentDto.isLike());
-        return ResponseEntity.ok("좋아요 저장완료");
+        commentService.saveCommentLikeByEmailAndCommentId(userDetails.getUsername(),commentDto.getId(),commentDto.getIsLike());
+        return ResponseEntity.ok("댓글 좋아요 저장완료");
+    }
+    @PostMapping("/interview/is-like")
+    public ResponseEntity<String> saveInterViewIsLike(@AuthenticationPrincipal UserDetails userDetails,
+                                             @RequestBody InterViewDto interViewDto){
+        interViewService.saveInterViewLikeByEmailAndInterViewId(userDetails.getUsername(),interViewDto.getId(),interViewDto.getIsLike());
+        return ResponseEntity.ok("인터뷰 문제에 좋아요 저장완료");
+    }
+    @PostMapping("/study/is-like")
+    public ResponseEntity<String> saveQuizIsLike(@AuthenticationPrincipal UserDetails userDetails,
+                                             @RequestBody QuizDto quizDto){
+        quizService.saveQuizLikeByEmailAndQuizId(userDetails.getUsername(),quizDto.getId(),quizDto.getIsLike());
+        return ResponseEntity.ok("스터디 게시글 좋아요 저장완료");
     }
     @GetMapping("/delete-comment")
     public ResponseEntity<String> deleteComment(@AuthenticationPrincipal UserDetails userDetails,

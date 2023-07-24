@@ -17,7 +17,7 @@ public class CommentDto {
 
     private long interViewId;
 
-    private int likeNum;
-    private boolean isLike;
+    private int likeCnt;
+    private Boolean isLike;
 
 }

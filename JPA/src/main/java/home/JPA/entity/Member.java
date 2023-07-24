@@ -39,7 +39,7 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member")
     private List<MemberQuizEntity> memberQuizEntityList;
     @OneToMany(mappedBy = "member")
-    private List<Feelings> feelingsList;
+    private List<CommentLikes> commentLikesList;
 
     @ManyToOne
     @JoinColumn(name = "univ_id")

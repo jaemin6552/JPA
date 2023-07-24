@@ -17,9 +17,8 @@ public class QuizDto {
     private String explanation;
     private String title;
     private String language_id;
-
+    private int likeCnt;
     private List<ExDto> exDtoList;
-
-
+    private Boolean isLike;
 
 }

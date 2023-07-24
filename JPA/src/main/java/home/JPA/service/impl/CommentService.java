@@ -1,12 +1,12 @@
 package home.JPA.service.impl;
 
 import home.JPA.dto.CommentDto;
-import home.JPA.entity.Feelings;
+import home.JPA.entity.CommentLikes;
 import home.JPA.entity.Member;
 import home.JPA.entity.comment.CommentEntity;
 import home.JPA.entity.interview.InterViewEntity;
 import home.JPA.repository.CommentRepository;
-import home.JPA.repository.FeelingsRepository;
+import home.JPA.repository.CommentLikesRepository;
 import home.JPA.repository.InterViewRepository;
 import home.JPA.repository.MemberRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final InterViewRepository interViewRepository;
 
-    private final FeelingsRepository feelingsRepository;
+    private final CommentLikesRepository commentLikesRepository;
     public List<CommentDto> getComment(long interViewId){
         List<CommentEntity> commentEntityList =commentRepository.findByInterViewEntityId(interViewId)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"댓글이 존재하지않습니다."));
@@ -60,12 +61,13 @@ public class CommentService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("권한이없습니다.");
         }
     }
-    public void saveFeelingsByEmailAndCommentId(String eMail,Long commentId,boolean isLike){
+    public void saveCommentLikeByEmailAndCommentId(String eMail, Long commentId, boolean isLike){
         Member member = memberRepository.findByEmail(eMail).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"멤버를 찾을수 없습니다."));
         CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"댓글이 없습니다."));
-        Optional<Feelings> feelingsOptional = feelingsRepository.findByMemberAndCommentEntity(member,commentEntity);
-        Feelings feelings = feelingsOptional.orElseGet(()->new Feelings(commentEntity,member,isLike));
-        if(!isLike && feelingsOptional.isPresent()) feelingsRepository.delete(feelings);
-        else if(isLike) feelingsRepository.save(feelings);
+        Optional<CommentLikes> commentLikesOptional = commentLikesRepository.findByMemberAndCommentEntity(member,commentEntity);
+        CommentLikes commentLikes = commentLikesOptional.orElseGet(()->new CommentLikes(commentEntity,member,isLike));
+        if(!isLike && commentLikesOptional.isPresent()) commentLikesRepository.delete(commentLikes);
+
+        else if(isLike) commentLikesRepository.save(commentLikes);
     }
 }
