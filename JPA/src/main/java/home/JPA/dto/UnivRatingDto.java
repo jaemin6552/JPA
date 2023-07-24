@@ -28,7 +28,7 @@ public class UnivRatingDto implements Comparable<UnivRatingDto>{
         UnivRatingDto other = (UnivRatingDto) obj;
         return Objects.equals(this.univName, other.univName);
     }
-
+    private long avg;
     @Override
     public int compareTo(UnivRatingDto o) {
         return Integer.compare(o.score,this.score);

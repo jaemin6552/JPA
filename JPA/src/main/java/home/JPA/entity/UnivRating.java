@@ -1,11 +1,13 @@
 package home.JPA.entity;
 
 import home.JPA.dto.UnivRatingDto;
+import home.JPA.entity.memberQuiz.MemberQuizEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -27,11 +29,14 @@ public class UnivRating extends BaseEntity implements Comparable<UnivRating>{
     private int nowRating;
     private int prevRating;
     public UnivRatingDto toDto(){
+        int tryCount = univEntity.getMemberList().size();
+
         return UnivRatingDto.builder()
                 .univName(univEntity.getName())
                 .rankName(rank)
                 .nowRating(nowRating)
                 .prevRating(prevRating)
+                .avg(score/tryCount)
                 .score(score)
                 .build();
     }
