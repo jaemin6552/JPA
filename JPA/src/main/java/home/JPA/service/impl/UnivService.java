@@ -26,14 +26,17 @@ public class UnivService {
     private UnivEntityRepository univEntityRepository;
 
     private UnivRatingRepository univRatingRepository;
-
-    //    @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
+    @Scheduled(cron = "0 0 0 * * ?") // 12시간마다 실행
     public void updateUnivRating() {
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         // 멤버 등수 업데이트 작업 수행
         List<UnivRating> univRatingList = new ArrayList<>();
+        List<UnivRating> checkUnivRatingList = univRatingRepository.findRankingsByDate(today.minusDays(8),today.minusDays(7));
+        if(!checkUnivRatingList.isEmpty()){
+            univRatingRepository.deleteAll(checkUnivRatingList);
+        }
         List<UnivEntity> univEntities = univEntityRepository.findAll();
-        List<UnivRating> prvUnivRatingList = univRatingRepository.findRankingsByDate(
+        List<UnivRating> prevUnivRatingList = univRatingRepository.findRankingsByDate(
                 today.minusDays(1), today);
 
         for (UnivEntity u : univEntities) {
@@ -52,7 +55,7 @@ public class UnivService {
         IntStream.range(0, sortedList.size())
                 .forEach(i -> {
                     UnivRating univRating = sortedList.get(i);
-                    int prevRank = prvUnivRatingList.stream()
+                    int prevRank = prevUnivRatingList.stream()
                             .filter(prevUnivRating -> prevUnivRating.toDto().equals(univRating.toDto()))
                             .map(UnivRating::getNowRating)
                             .findFirst()
@@ -69,6 +72,11 @@ public class UnivService {
         List<UnivRating> univRatingList = univRatingRepository.findRankingsByDate(
                 today, today.plusDays(1));
         return univRatingList.stream().map(UnivRating::toDto).collect(Collectors.toList());
-
         }
+    public List<UnivRatingDto> getPrivateRating(String univName){
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        List<UnivRating> univRatingList = univRatingRepository.findRankingsByDateAndUnivName(univName,
+                today.minusDays(7), today.plusDays(1));
+        return univRatingList.stream().map(UnivRating::toDto).collect(Collectors.toList());
+    }
 }

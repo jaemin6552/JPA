@@ -22,7 +22,8 @@ public class MemberRating extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Integer rating;
+    private int nowRating;
+    private int prevRating;
 
     public MemberRatingDto toDto(){
         return MemberRatingDto.builder()
@@ -32,4 +33,5 @@ public class MemberRating extends BaseEntity{
                 .univName(member.getUnivEntity().getName())
                 .build();
     }
+
 }

@@ -1,6 +1,9 @@
 package home.JPA.dto;
 
+import home.JPA.entity.MemberRating;
 import lombok.*;
+
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +18,16 @@ public class MemberRatingDto {
     private long avg;
     private String univName;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        MemberRatingDto other = (MemberRatingDto) obj;
+        return Objects.equals(this.userName, other.userName);
+    }
 
 }

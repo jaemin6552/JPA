@@ -20,6 +20,7 @@ public interface MemberService {
     public void deleteById(String memberId);
 
     public List<MemberRatingDto> getMemberRating();
+    public List<MemberRatingDto> getPrivateMemberRating(String nickName);
 
     public ResponseEntity<String> updateByNickName(String Email, String nickName);
 

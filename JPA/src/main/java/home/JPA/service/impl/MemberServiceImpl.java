@@ -24,8 +24,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,15 +109,45 @@ public class MemberServiceImpl implements MemberService {
     @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12시간마다 실행
     public void updateRating() {
         // 멤버 등수 업데이트 작업 수행
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+
+        List<MemberRating> checkMemberRatingList = memberRatingRepository.findRankingsByDate(today.minusDays(8),today.minusDays(7));
+        if(!checkMemberRatingList.isEmpty()){
+            memberRatingRepository.deleteAll(checkMemberRatingList);
+        }
         List<Member> memberList = memberRepository.findMembersOrderByScore();
         List<MemberRating> memberRatingList = new ArrayList<>();
+        List<MemberRating> prevMemberRatingList = memberRatingRepository.findRankingsByDate(today.minusDays(1),today);
         for(int i = 0; i<memberList.size(); i++){
             MemberRating memberRating = new MemberRating();
             memberRating.setMember(memberList.get(i));
-            memberRating.setRating(i);
+            int prevRating = prevMemberRatingList.stream()
+                    .filter(prevMemberRating -> prevMemberRating.toDto().equals(memberRating.toDto()))
+                    .map(MemberRating::getNowRating) // 자동으로 생성된 getter 메소드 사용
+                    .findFirst()
+                    .orElse(-1);
+            memberRating.setPrevRating(prevRating);
+            memberRating.setNowRating(i);
             memberRatingList.add(memberRating);
         }
         memberRatingRepository.saveAll(memberRatingList);
+    }
+    @Override
+    public List<MemberRatingDto> getMemberRating() {
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        List<MemberRating> memberRatingList = memberRatingRepository.findRankingsByDate(today,today.plusDays(1));
+        return memberRatingList.stream()
+                .map(MemberRating::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MemberRatingDto> getPrivateMemberRating(String nickName) {
+        LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        List<MemberRating> memberRatingList = memberRatingRepository.findRankingsByDateAndMemberNickName(nickName,today.minusDays(7),today.plusDays(1));
+        return memberRatingList.stream()
+                .map(MemberRating::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -142,15 +174,6 @@ public class MemberServiceImpl implements MemberService {
     public void deleteById(String id) {
         memberDataHandler.deleteById(id);
     }
-
-    @Override
-    public List<MemberRatingDto> getMemberRating() {
-        List<MemberRating> memberRatingList = memberRatingRepository.findAll();
-        return memberRatingList.stream()
-                        .map(MemberRating::toDto)
-                        .collect(Collectors.toList());
-    }
-
 
     @Override
     public List<MemberDto> getAll() {

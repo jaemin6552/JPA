@@ -18,6 +18,10 @@ import java.util.List;
 public interface UnivRatingRepository extends JpaRepository<UnivRating,Long> {
 
     @Query("SELECT r FROM UnivRating r WHERE r.createdAt >= ?1 AND r.createdAt < ?2")
-    List<UnivRating> findRankingsByDate(LocalDateTime startOfDay
-                                       ,LocalDateTime nextDay);
+    List<UnivRating> findRankingsByDate(LocalDateTime startOfDay,
+                                        LocalDateTime nextDay);
+    @Query("SELECT r FROM UnivRating r WHERE r.univEntity.name = ?1 AND r.createdAt >= ?2 AND r.createdAt < ?3")
+    List<UnivRating> findRankingsByDateAndUnivName(String univName,
+                                                   LocalDateTime startOfDay,
+                                                   LocalDateTime nextDay);
 }
