@@ -38,6 +38,7 @@ public class CommentEntity extends BaseEntity {
                 .nickName(member.getNickName())
                 .interViewId(interViewEntity.getId())
                 .likeNum(feelingsList.size())
+                .id(id)
                 .build();
     }
 

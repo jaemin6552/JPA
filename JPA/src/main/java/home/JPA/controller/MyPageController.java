@@ -68,16 +68,20 @@ public class MyPageController {
                             commentDto.getInterViewId(), commentDto.getDetail());
         return ResponseEntity.ok(true);
     }
-    @GetMapping("/is-like")
+    @PostMapping("/is-like")
     public ResponseEntity<String> saveIsLike(@AuthenticationPrincipal UserDetails userDetails,
-                                             @RequestParam long commentId,
-                                             @RequestParam boolean isLike){
-        commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentId,isLike);
+                                             @RequestBody CommentDto commentDto){
+        commentService.saveFeelingsByEmailAndCommentId(userDetails.getUsername(),commentDto.getId(),commentDto.isLike());
         return ResponseEntity.ok("좋아요 저장완료");
     }
     @GetMapping("/delete-comment")
     public ResponseEntity<String> deleteComment(@AuthenticationPrincipal UserDetails userDetails,
                                                 @RequestParam long commentId){
         return commentService.deleteComment(userDetails.getUsername(),commentId);
+    }
+    @PostMapping("/change-comment")
+    public ResponseEntity<String> changeComment(@AuthenticationPrincipal UserDetails userDetails,
+                                                @RequestBody CommentDto commentDto){
+        return commentService.changeComment(userDetails.getUsername(),commentDto.getId(),commentDto.getDetail());
     }
 }

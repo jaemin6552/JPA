@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CommentDto {
-
+    private long id;
     private String detail;
 
     private String nickName;
@@ -18,4 +18,6 @@ public class CommentDto {
     private long interViewId;
 
     private int likeNum;
+    private boolean isLike;
+
 }

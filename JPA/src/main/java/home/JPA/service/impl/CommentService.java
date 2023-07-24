@@ -41,9 +41,15 @@ public class CommentService {
         comment.setDetail(commentDetail);
         commentRepository.save(comment);
     }
-    public ResponseEntity<String> changeComment(String email, Long commentId){
+    public ResponseEntity<String> changeComment(String email, Long commentId, String content){
         CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"지우실 댓글이 없습니다."));
-
+        if(commentEntity.getMember().getEmail().equals(email)) {
+            commentEntity.setDetail(content);
+            commentRepository.save(commentEntity);
+            return ResponseEntity.ok("댓글 수정 완료");
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("권한이없습니다.");
+        }
     }
     public ResponseEntity<String> deleteComment(String email, Long commentId){
         CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"지우실 댓글이 없습니다."));
