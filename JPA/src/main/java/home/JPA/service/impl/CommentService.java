@@ -55,6 +55,9 @@ public class CommentService {
     public ResponseEntity<String> deleteComment(String email, Long commentId){
         CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"지우실 댓글이 없습니다."));
         if(commentEntity.getMember().getEmail().equals(email)) {
+            if(!commentEntity.getCommentLikesList().isEmpty()){
+                commentLikesRepository.deleteAll(commentEntity.getCommentLikesList());
+            }
             commentRepository.delete(commentEntity);
             return ResponseEntity.ok("댓글 삭제 완료");
         }else{

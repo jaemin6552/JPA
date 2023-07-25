@@ -1,5 +1,6 @@
 package home.JPA.service.impl;
 
+import home.JPA.dto.UnivEntityDto;
 import home.JPA.dto.UnivRatingDto;
 import home.JPA.entity.Member;
 import home.JPA.entity.UnivEntity;
@@ -26,6 +27,10 @@ public class UnivService {
     private UnivEntityRepository univEntityRepository;
 
     private UnivRatingRepository univRatingRepository;
+
+    public List<UnivEntityDto> GetUnivAll(){
+        return univEntityRepository.findAll().stream().map(UnivEntity::toDto).collect(Collectors.toList());
+    }
     @Scheduled(cron = "0 0 0 * * ?") // 12시간마다 실행
     public void updateUnivRating() {
         LocalDateTime today = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);

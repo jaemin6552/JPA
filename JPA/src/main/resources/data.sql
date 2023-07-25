@@ -1012,7 +1012,7 @@ INSERT INTO ex_entity(id,example,choice,quiz_id) values(444,"포인터는 연속
 
 INSERT INTO ex_entity(id,example,choice,quiz_id) values(445,"create()",1,112);
 INSERT INTO ex_entity(id,example,choice,quiz_id) values(446,"allocate()",2,112);
-INSERT INTO ex_entity(id,example,choice,quiz_id) values(447,"calloc()",3,112);
+INSERT INTO ex_entity(id,example,choice,quiz_id) values(447,"malloc()",3,112);
 INSERT INTO ex_entity(id,example,choice,quiz_id) values(448,"init()",4,112);
 
 INSERT INTO ex_entity(id,example,choice,quiz_id) values(449,"compare()",1,113);

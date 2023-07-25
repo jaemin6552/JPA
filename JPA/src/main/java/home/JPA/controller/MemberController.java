@@ -1,12 +1,10 @@
 package home.JPA.controller;
 
-import home.JPA.dto.MemberDto;
-import home.JPA.dto.JoinDto;
-import home.JPA.dto.LoginDto;
-import home.JPA.dto.TokenDto;
+import home.JPA.dto.*;
 import home.JPA.entity.rank.MemberRank;
 import home.JPA.service.MemberRankService;
 import home.JPA.service.MemberService;
+import home.JPA.service.impl.UnivService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +23,17 @@ public class MemberController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
     private final MemberService memberService;
+    private final UnivService univService;
 
     @GetMapping(value = "/member/{memberId}")
     public MemberDto getMember(@PathVariable String memberId) {
         return memberService.getMember(memberId);
     }
 
-
+    @GetMapping(value ="/univ")
+    public ResponseEntity<List<UnivEntityDto>> getAllUnivName(){
+        return ResponseEntity.ok(univService.GetUnivAll());
+    }
     @PostMapping("/signup")
     public ResponseEntity<LoginDto> signup(@RequestBody JoinDto joinDto) {
         return ResponseEntity.ok(memberService.signup(joinDto));

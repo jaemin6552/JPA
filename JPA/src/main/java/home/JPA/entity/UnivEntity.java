@@ -1,5 +1,6 @@
 package home.JPA.entity;
 
+import home.JPA.dto.UnivEntityDto;
 import home.JPA.entity.rank.UnivRank;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +28,12 @@ public class UnivEntity extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "rank_id")
     private UnivRank univRank;
+
+    public UnivEntityDto toDto(){
+        return UnivEntityDto.builder()
+                .id(id)
+                .name(name)
+                .build();
+    }
 
 }
